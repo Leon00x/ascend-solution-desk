@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f7f6f3" />
-  <title>昇腾算力选型台</title>
+  <title>昇腾场景方案</title>
   <style>
     :root {
       --paper: #f7f6f3;
@@ -51,6 +51,7 @@
     .scenario:hover { border-color:var(--line-dark); background:white; }
     .scenario.selected { border-color:var(--red); box-shadow:inset 3px 0 var(--red); background:white; }
     .scenario-icon { width:38px; height:38px; display:grid; place-items:center; color:var(--red); background:var(--red-soft); font-size:17px; font-weight:750; flex:0 0 auto; }
+    .scenario-icon svg { width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
     .scenario:nth-child(2) .scenario-icon { color:var(--teal); background:var(--teal-soft); }
     .scenario:nth-child(3) .scenario-icon { color:#9c6715; background:#f8efd9; }
     .scenario-text { flex:1; display:block; }
@@ -224,7 +225,7 @@
 <body>
 <div class="shell">
   <header class="topbar">
-    <div class="brand"><div class="brand-mark">昇</div><div><div class="brand-name">昇腾算力选型台</div><div class="brand-sub">ASCEND SOLUTION DESK</div></div></div>
+    <div class="brand"><div class="brand-mark">昇</div><div><div class="brand-name">昇腾场景方案</div><div class="brand-sub">ASCEND SCENARIO SOLUTIONS</div></div></div>
     <nav class="nav" aria-label="主导航">
       <button class="active" data-view="solutions">场景选型</button>
       <button data-view="benchmarks">实测数据</button>
@@ -265,16 +266,16 @@
     </section>
     <section class="view" id="experience">
       <div class="hero"><div><div class="eyebrow">Inference playground</div><h1>在推荐配置上，直接体验响应节奏</h1><p>这是方案沟通用的交互演示窗口。选择场景后，右侧同步展示当前推荐配置与性能基线。</p></div><div class="stamp"><strong>当前推理配置</strong><span id="playgroundConfig"></span></div></div>
-      <div class="chat-layout"><article class="panel chat-main"><div class="chat-head"><div class="model-meta"><div class="model-chip" id="modelChip">DS</div><div><div class="model-name" id="chatModel">DeepSeek V4 Flash 0731</div><div class="model-sub" id="chatModelSub">910B · 1P1D 实测配置参考</div></div></div><span class="chat-status">● 本地体验模拟</span></div><div class="messages" id="messages"></div><div class="composer"><div class="prompt-chips"><button class="prompt-chip" data-prompt="请解释这段代码的逻辑，并指出可能的性能问题。">代码审查</button><button class="prompt-chip" data-prompt="请总结这份知识库文档，并列出关键结论。">知识库问答</button><button class="prompt-chip" data-prompt="请按区域分析本季度销售趋势，并给出三条发现。">数据分析</button></div><form class="input-row" id="chatForm"><input id="chatInput" placeholder="输入一个问题，体验模型响应…" autocomplete="off"/><button class="send" type="submit">发送</button></form></div></article><aside class="panel chat-side"><div class="panel-head"><span class="panel-title">当前性能基线</span></div><div class="panel-body"><div class="side-label">方案配置</div><div class="side-stat"><span>加速卡</span><strong id="sideChip"></strong></div><div class="side-stat"><span>部署规模</span><strong id="sideNodes"></strong></div><div class="side-stat"><span>推荐模型</span><strong id="sideModel"></strong></div><div class="side-stat"><span>适用场景</span><strong id="sideScene"></strong></div><div class="performance-band"><div class="band-title">16 并发 · TTFT avg</div><div class="band-value" id="sideTtft"></div><div class="band-foot" id="sideSource">1 套（2 台）实测；多套并发容量按线性扩展推算，需补测。</div></div><div class="performance-band"><div class="band-title">16 并发 · Decode 速度</div><div class="band-value" id="sideSpeed"></div><div class="band-foot" id="sideDecodeSource">对应现有 910B 压测记录，输入 3,069 / 输出 512 tokens。</div></div></div></aside></div><footer class="page-foot"><span>演示对话为本地模拟，不会发送到推理服务。</span><span>由场景选型台驱动</span></footer>
+      <div class="chat-layout"><article class="panel chat-main"><div class="chat-head"><div class="model-meta"><div class="model-chip" id="modelChip">DS</div><div><div class="model-name" id="chatModel">DeepSeek V4 Flash 0731</div><div class="model-sub" id="chatModelSub">910B · 1P1D 实测配置参考</div></div></div><span class="chat-status">● 本地体验模拟</span></div><div class="messages" id="messages"></div><div class="composer"><div class="prompt-chips"><button class="prompt-chip" data-prompt="请解释这段代码的逻辑，并指出可能的性能问题。">代码审查</button><button class="prompt-chip" data-prompt="请总结这份知识库文档，并列出关键结论。">知识库问答</button><button class="prompt-chip" data-prompt="请按区域分析本季度销售趋势，并给出三条发现。">数据分析</button></div><form class="input-row" id="chatForm"><input id="chatInput" placeholder="输入一个问题，体验模型响应…" autocomplete="off"/><button class="send" type="submit">发送</button></form></div></article><aside class="panel chat-side"><div class="panel-head"><span class="panel-title">当前性能基线</span></div><div class="panel-body"><div class="side-label">方案配置</div><div class="side-stat"><span>加速卡</span><strong id="sideChip"></strong></div><div class="side-stat"><span>部署规模</span><strong id="sideNodes"></strong></div><div class="side-stat"><span>推荐模型</span><strong id="sideModel"></strong></div><div class="side-stat"><span>适用场景</span><strong id="sideScene"></strong></div><div class="performance-band"><div class="band-title">16 并发 · TTFT avg</div><div class="band-value" id="sideTtft"></div><div class="band-foot" id="sideSource">1 套（2 台）实测；多套并发容量按线性扩展推算，需补测。</div></div><div class="performance-band"><div class="band-title">16 并发 · Decode 速度</div><div class="band-value" id="sideSpeed"></div><div class="band-foot" id="sideDecodeSource">对应现有 910B 压测记录，输入 3,069 / 输出 512 tokens。</div></div></div></aside></div><footer class="page-foot"><span>演示对话为本地模拟，不会发送到推理服务。</span><span>由昇腾场景方案驱动</span></footer>
     </section>
   </main>
 </div>
 <div class="modal-backdrop" id="sceneModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="eyebrow">Scenario brief</div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="scene-tags" id="modalTags"></div><p id="modalWorkload"></p><button id="closeModal">返回配置</button></div></div>
 <script>
   const scenarios = [
-    { id:'coding', icon:'{ }', title:'Coding 助手', sub:'代码补全 · 仓库问答 · Agent', heading:'企业级 Coding 助手', description:'面向开发团队的代码生成、代码解释与仓库级问答。建议重点评估长上下文下的首 token 延迟，以及多人同时编码时的吞吐稳定性。', tags:['代码生成','仓库 RAG','长上下文'], minimum:{label:'最低配置 · Mock',nodes:1,chip:'910B · 1P1D',model:'GLM-5.3',users:2,ttft:'1.28s',speed:'53.76 tok/s'}, recommended:{label:'推荐配置 · Mock 估算',nodes:2,chip:'910B · 1P1D',model:'GLM-5.3',users:32,ttft:'2.22s',speed:'45.25 tok/s'}, note:'GLM-5.3 性能和容量均为 Mock 数据，仅供演示；客户方案需实际压测验证。', workload:'建议先确认代码库规模、会话上下文长度、峰值并发以及是否需要 Agent 多步调用。'},
-    { id:'service', icon:'客服', title:'聊天机器人 / AI 客服', sub:'多轮对话 · 知识库检索 · 高可用', heading:'聊天机器人 / AI 客服', description:'适用于客服坐席辅助、在线问答与企业服务机器人。通过知识库检索回答产品与服务问题，按高峰并发和可接受等待时间选择部署规模。', tags:['多轮对话','知识库 RAG','峰值并发'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议提供日均会话量、峰值并发、知识库规模、答案引用要求与 SLA。'},
-    { id:'chatbi', icon:'BI', title:'ChatBI 数据分析', sub:'自然语言问数 · SQL 生成 · 分析总结', heading:'ChatBI 数据分析助手', description:'面向经营分析与数据查询，通过自然语言转 SQL、指标解释和结果总结降低数据使用门槛。重点关注复杂问题的响应时间与分析任务的上下文长度。', tags:['自然语言问数','SQL 生成','指标解读'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议确认数据源数量、指标口径、SQL 权限边界、问题复杂度与业务高峰时段。'}
+    { id:'coding', title:'Coding 助手', sub:'代码补全 · 仓库问答 · Agent', heading:'企业级 Coding 助手', description:'面向开发团队的代码生成、代码解释与仓库级问答。建议重点评估长上下文下的首 token 延迟，以及多人同时编码时的吞吐稳定性。', tags:['代码生成','仓库 RAG','长上下文'], minimum:{label:'最低配置 · Mock',nodes:1,chip:'910B · 1P1D',model:'GLM-5.3',users:2,ttft:'1.28s',speed:'53.76 tok/s'}, recommended:{label:'推荐配置 · Mock 估算',nodes:2,chip:'910B · 1P1D',model:'GLM-5.3',users:32,ttft:'2.22s',speed:'45.25 tok/s'}, note:'GLM-5.3 性能和容量均为 Mock 数据，仅供演示；客户方案需实际压测验证。', workload:'建议先确认代码库规模、会话上下文长度、峰值并发以及是否需要 Agent 多步调用。'},
+    { id:'service', title:'聊天机器人 / AI 客服', sub:'多轮对话 · 知识库检索 · 高可用', heading:'聊天机器人 / AI 客服', description:'适用于客服坐席辅助、在线问答与企业服务机器人。通过知识库检索回答产品与服务问题，按高峰并发和可接受等待时间选择部署规模。', tags:['多轮对话','知识库 RAG','峰值并发'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议提供日均会话量、峰值并发、知识库规模、答案引用要求与 SLA。'},
+    { id:'chatbi', title:'ChatBI 数据分析', sub:'自然语言问数 · SQL 生成 · 分析总结', heading:'ChatBI 数据分析助手', description:'面向经营分析与数据查询，通过自然语言转 SQL、指标解释和结果总结降低数据使用门槛。重点关注复杂问题的响应时间与分析任务的上下文长度。', tags:['自然语言问数','SQL 生成','指标解读'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议确认数据源数量、指标口径、SQL 权限边界、问题复杂度与业务高峰时段。'}
   ];
   // Values imported from DeepSeek_V4_Flash_0731_capacity_planning.html. Ascend 910B, 1P1D (2 nodes), 3069 input / 512 output tokens.
   const data = [
@@ -310,6 +311,11 @@
     {conc:32,name:'中',color:'#c2410c',desc:'高吞吐'},
     {conc:64,name:'差',color:'#b91c1c',desc:'高压力'}
   ];
+  const scenarioIcons = {
+    coding:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="m9 9-3 3 3 3m6-6 3 3-3 3"/></svg>',
+    service:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16v12H9l-5 3v-15Z"/><path d="M8 9h8M8 12.5h5"/></svg>',
+    chatbi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17M5.5 17v-6h3v6m3 0V5.5h3V17m3 0V9h3v8"/></svg>'
+  };
   const sceneCardCopy = {
     coding:'使用昇腾部署 GLM-5.3 推理服务，结合 Code Agent 进行代码生成、编写和仓库问答。当前性能为 Mock 数据。',
     service:'将昇腾上的大模型与企业知识库结合，处理在线咨询、工单问答和坐席辅助，并关注高峰时段的响应体验。',
@@ -325,7 +331,7 @@
   function scenarioModel(){ return scenarios[selected].id==='coding'?'GLM-5.3':'DeepSeek V4 Flash 0731'; }
   function scenarioData(){ if($('#planChip').value!=='910B')return []; return scenarios[selected].id==='coding'?glmMockData:data; }
   function sourceLabel(){ return $('#planChip').value!=='910B'?'待采集':scenarios[selected].id==='coding'?'Mock 数据':'实测数据'; }
-  function renderScenarios(){ $('#scenarioStrip').innerHTML=scenarios.map((s,i)=>{const coding=s.id==='coding', model=coding?'GLM-5.3':'DeepSeek V4 Flash';return `<button class="scenario ${i===selected?'selected':''}" data-index="${i}"><span class="scenario-title-row"><span class="scenario-icon">${s.icon}</span><span class="scenario-title">${s.title}</span>${coding?'<span class="mock-mark">Mock 数据</span>':''}</span><span class="scenario-text"><span class="scenario-desc">${sceneCardCopy[s.id]}</span></span><span class="scenario-fit"><small>最小配置 · 演示起点，待场景验证</small>2 台 Ascend 910B · ${model}${coding?'<span class="mock-mark">Mock</span>':''}</span></button>`;}).join(''); $$('.scenario').forEach(b=>b.onclick=()=>selectScenario(+b.dataset.index)); }
+  function renderScenarios(){ $('#scenarioStrip').innerHTML=scenarios.map((s,i)=>{const coding=s.id==='coding', model=coding?'GLM-5.3':'DeepSeek V4 Flash';return `<button class="scenario ${i===selected?'selected':''}" data-index="${i}"><span class="scenario-title-row"><span class="scenario-icon">${scenarioIcons[s.id]}</span><span class="scenario-title">${s.title}</span>${coding?'<span class="mock-mark">Mock 数据</span>':''}</span><span class="scenario-text"><span class="scenario-desc">${sceneCardCopy[s.id]}</span></span><span class="scenario-fit"><small>最小配置 · 演示起点，待场景验证</small>2 台 Ascend 910B · ${model}${coding?'<span class="mock-mark">Mock</span>':''}</span></button>`;}).join(''); $$('.scenario').forEach(b=>b.onclick=()=>selectScenario(+b.dataset.index)); }
   function selectScenario(i){ selected=i; const s=scenarios[i], demand=sceneDemand[s.id]; selectedTierIndex=demand.tier; renderScenarios(); $('#sceneHeading').textContent=s.heading; $('#sceneDescription').textContent=s.description+(s.id==='coding'?' 当前 GLM-5.3 配置和性能为 Mock 数据，待真实压测替换。':''); $('#sceneTags').innerHTML=s.tags.map(t=>`<span class="tag">${t}</span>`).join(''); $('#serviceTokenHighlights').hidden=s.id!=='service'; $('#assumptionText').textContent=demand.text; $('#targetQps').value=demand.qps; $('#multInput').value=1; $('#modelFilter').value=s.id==='coding'?'GLM-5.3 · Mock 数据':'DeepSeek V4 Flash 0731'; $('#modelFilter2').value=$('#modelFilter').value; $('#miniAnswer').textContent='选择档位，输入问题开始体验。'; $('#miniStatus').textContent=s.id==='coding'?'回复内容和响应节奏均为 Mock 数据。':'回复内容为演示文案，响应节奏按原始压测值模拟。'; renderTierCards(); updateMultiplier(); renderChartAndTable(); }
   function tierPoint(){ return scenarioData().find(d=>d.conc===tierDefs[selectedTierIndex].conc); }
   function targetQps(){ return Math.max(.1,Math.min(1000,parseFloat($('#targetQps').value)||1)); }
