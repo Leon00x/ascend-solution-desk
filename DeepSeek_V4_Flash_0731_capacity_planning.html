@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek V4 Flash 0731 容量规划</title>
+<style>
+  :root {
+    --paper: #f7f6f3;
+    --card: #ffffff;
+    --ink: #1c1917;
+    --ink-2: #57534e;
+    --ink-3: #8a857c;
+    --line: #e5e2dc;
+    --accent: #1e3a5f;
+    --accent-soft: #eef1f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0; padding: 40px 24px 64px; color: var(--ink); background: var(--paper);
+    line-height: 1.55;
+  }
+  .container { max-width: 1160px; margin: 0 auto; }
+
+  .head-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 8px; }
+  .report-head { margin-bottom: 28px; }
+  h1 {
+    font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+    font-size: 30px; font-weight: 700; letter-spacing: .4px; margin: 0; line-height: 1.2;
+  }
+  .report-meta { font-size: 12.5px; color: var(--ink-2); }
+  .rule { height: 3px; background: var(--accent); margin-top: 16px; }
+
+  .lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex: none; margin-top: 2px; }
+  .lang-switch button {
+    border: none; background: transparent; padding: 5px 14px; font-size: 12px;
+    cursor: pointer; color: var(--ink-2); font-family: inherit;
+  }
+  .lang-switch button + button { border-left: 1px solid var(--line); }
+  .lang-switch button.active { background: var(--accent); color: #fff; }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 34px; }
+  @media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-top: 3px solid var(--accent); border-radius: 6px;
+    padding: 16px 20px; font-size: 13px; color: var(--ink-2);
+  }
+  .card-h {
+    font-size: 13px; font-weight: 600; color: var(--ink);
+    margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .card .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 18px; }
+  .card .row b { color: var(--ink); font-weight: 600; }
+
+  section { margin-bottom: 40px; }
+  h2 {
+    font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+    font-size: 19px; font-weight: 600; margin: 0 0 4px;
+  }
+  .sec-sub { font-size: 12px; color: var(--ink-3); margin: 0 0 14px; }
+
+  .table-wrap {
+    overflow-x: auto; background: var(--card);
+    border: 1px solid var(--line); border-radius: 6px;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; white-space: nowrap; }
+  th, td { padding: 7px 10px; text-align: center; border-bottom: 1px solid var(--line); }
+  thead th {
+    background: var(--accent); color: #f8fafc; font-weight: 500;
+    font-size: 12px; position: sticky; top: 0; z-index: 1;
+  }
+  thead th .sub { color: #cbd5e1; }
+  tbody tr:nth-child(even) { background: #fafaf7; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td.left, th.left { text-align: left; }
+  .mono { font-variant-numeric: tabular-nums; }
+  .grp { border-top: 2px solid #d8d4cc; }
+  .num-hl { font-weight: 700; color: var(--accent); }
+  .note { font-size: 12px; color: var(--ink-3); margin-top: 10px; }
+  .cell-main { font-weight: 600; }
+  .sub { color: var(--ink-3); font-size: 10.5px; }
+
+  .lvl { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12.5px; white-space: nowrap; }
+  .lvl-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
+
+  .chart-wrap {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 16px 18px; margin-bottom: 18px;
+  }
+  .legend { display: flex; gap: 18px; font-size: 12px; margin-bottom: 8px; flex-wrap: wrap; color: var(--ink-2); }
+  .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+  .legend .line-swatch { display: inline-block; width: 16px; height: 0; border-top-width: 2px; border-top-style: solid; margin-right: 5px; vertical-align: middle; }
+  #triChart { cursor: crosshair; display: block; }
+
+  /* ---- chat experience simulator ---- */
+  .tier-picker { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tier-btn {
+    flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line); background: var(--card);
+    border-radius: 6px; padding: 10px 12px; cursor: pointer; text-align: left;
+    font-family: inherit; transition: border-color .15s, box-shadow .15s, background .15s;
+  }
+  .tier-btn:hover { border-color: var(--accent); }
+  .tier-btn.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); background: var(--accent-soft); }
+  .tier-btn .t-name { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; color: var(--ink); }
+  .tier-btn .t-data { margin-top: 6px; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; line-height: 1.6; }
+  .tier-btn .t-data b { color: var(--ink); font-weight: 600; }
+
+  .chat-wrap { background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .chat-log {
+    height: 380px; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px;
+    background: linear-gradient(180deg, #fbfaf8, #f4f2ee);
+  }
+  .msg { max-width: 78%; padding: 10px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 3px; }
+  .msg.bot { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 3px; }
+  .msg.bot .caret { display: inline-block; width: 2px; height: 1em; background: var(--accent); vertical-align: -2px; margin-left: 2px; animation: blink .8s infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+  .msg .meta { display: block; font-size: 10.5px; color: var(--ink-3); margin-top: 7px; font-variant-numeric: tabular-nums; line-height: 1.5; }
+  .chat-actions { display: flex; gap: 8px; padding: 10px 18px 0; background: var(--card); }
+  .chat-actions .quick:last-child { margin-left: auto; }
+  .chat-actions .quick {
+    border: 1px solid var(--line); background: #fff; color: var(--ink-2); border-radius: 999px;
+    padding: 4px 12px; font-size: 11.5px; cursor: pointer; font-family: inherit;
+  }
+  .chat-actions .quick:hover { border-color: var(--accent); color: var(--accent); }
+  .chat-status { padding: 8px 18px; font-size: 12px; color: var(--ink-2); border-top: 1px solid var(--line); background: #fafaf7; min-height: 36px; display: flex; align-items: center; gap: 8px; }
+  .chat-status .spinner { width: 10px; height: 10px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .chat-input-row { display: flex; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--line); background: var(--card); }
+  .chat-input-row input {
+    flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 6px; padding: 9px 12px; font-size: 13px;
+    font-family: inherit; color: var(--ink); outline: none; background: #fff;
+  }
+  .chat-input-row input:focus { border-color: var(--accent); }
+  .chat-input-row button {
+    border: none; border-radius: 6px; padding: 9px 20px; font-size: 13px; font-weight: 600;
+    background: var(--accent); color: #fff; cursor: pointer; font-family: inherit; transition: opacity .15s;
+  }
+  .chat-input-row button:disabled { opacity: .45; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-head">
+    <div class="head-row">
+      <h1 data-zh="DeepSeek V4 Flash 0731 容量规划" data-en="DeepSeek V4 Flash 0731 Capacity Planning">DeepSeek V4 Flash 0731 容量规划</h1>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button id="btnZh" class="active">中文</button>
+        <button id="btnEn">EN</button>
+      </div>
+    </div>
+    <div class="report-meta" data-zh="数据源 groupB_3072.txt · 模型 dsv4-spark · 数据集 random · API openai · 单请求 输入 3069 / 输出 512 token" data-en="Source groupB_3072.txt · Model dsv4-spark · Dataset random · API openai · 3069 in / 512 out tokens per request">数据源 groupB_3072.txt · 模型 dsv4-spark · 数据集 random · API openai · 单请求 输入 3069 / 输出 512 token</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-h" data-zh="用户假设" data-en="User Assumptions">用户假设</div>
+      <div class="rows">
+        <div class="row"><b data-zh="用户量" data-en="Users">用户量</b>：<span data-zh="10 万 · 20% 日活（2 万 DAU）" data-en="100k · 20% DAU (20k DAU)">10 万 · 20% 日活（2 万 DAU）</span></div>
+        <div class="row"><b data-zh="行为" data-en="Behavior">行为</b>：<span data-zh="每人每天 30 请求" data-en="30 requests / user / day">每人每天 30 请求</span></div>
+        <div class="row"><b data-zh="总量" data-en="Volume">总量</b>：<span data-zh="60 万请求/天" data-en="600k requests / day">60 万请求/天</span></div>
+        <div class="row"><b data-zh="分布" data-en="Distribution">分布</b>：<span data-zh="80% 集中在 8h" data-en="80% within 8h">80% 集中在 8h</span></div>
+        <div class="row"><b data-zh="目标 QPS" data-en="Target QPS">目标 QPS</b>：<span data-zh="低谷 8 / 平均 16 / 高峰 30" data-en="Off-peak 8 / Avg 16 / Peak 30">低谷 8 / 平均 16 / 高峰 30</span></div>
+        <div class="row"><b data-zh="单请求" data-en="Per request">单请求</b>：<span data-zh="输入 3k / 输出 0.5k token" data-en="3k in / 0.5k out tokens">输入 3k / 输出 0.5k token</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h" data-zh="部署配置" data-en="Deployment Configuration">部署配置</div>
+      <div class="rows">
+        <div class="row"><b data-zh="硬件" data-en="Hardware">硬件</b>：Ascend 910B 313T</div>
+        <div class="row"><b data-zh="模型" data-en="Model">模型</b>：DeepSeek V4 Flash</div>
+        <div class="row"><b data-zh="拓扑" data-en="Topology">拓扑</b>：1P1D（1 Prefill + 1 Decode）</div>
+        <div class="row"><b data-zh="P 节点" data-en="P node">P 节点</b>：TP4 · DP2</div>
+        <div class="row"><b data-zh="单套机器" data-en="Machines / unit">单套机器</b>：<span data-zh="2 台 Ascend 910B（P1 + D1）" data-en="2 × Ascend 910B (P1 + D1)">2 台 Ascend 910B（P1 + D1）</span></div>
+        <div class="row"><b data-zh="上下文" data-en="Context">上下文</b>：135,000 tokens</div>
+        <div class="row"><b data-zh="单套" data-en="Per unit">单套</b>：<span data-zh="测试实例 groupB_3072（3069/512）" data-en="Test instance groupB_3072 (3069/512)">测试实例 groupB_3072（3069/512）</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2 data-zh="1 · 原始测试数据（groupB_3072，输入 3069 / 输出 512）" data-en="1 · Raw Test Data (groupB_3072, 3069 in / 512 out)">1 · 原始测试数据（groupB_3072，输入 3069 / 输出 512）</h2>
+    <p class="sec-sub" data-zh="图 1 为三面板折线图：共享 X 轴（并发），三个面板独立 Y 轴（左侧同一条轴线）；上部面板为吞吐（总吞吐 + 输入 Prompt + 输出 Completion），鼠标移动查看数值。" data-en="Fig. 1: three stacked panels sharing the X axis (concurrency), each with its own left-aligned Y axis; the top panel shows throughput (total + input Prompt + output Completion); move the mouse to inspect values.">图 1 为三面板折线图：共享 X 轴（并发），三个面板独立 Y 轴（左侧同一条轴线）；上部面板为吞吐（总吞吐 + 输入 Prompt + 输出 Completion），鼠标移动查看数值。</p>
+    <div class="chart-wrap">
+      <div class="legend">
+        <span data-zh="总吞吐 tok/s（输入+输出 · 上）" data-en="Total tok/s (in+out · top)"><span class="line-swatch" style="border-top-color:#1e3a5f"></span>总吞吐 tok/s（输入+输出 · 上）</span>
+        <span data-zh="Prompt tok/s（输入 · 上）" data-en="Prompt tok/s (input · top)"><span class="line-swatch" style="border-top-color:#64748b; border-top-style:dashed"></span>Prompt tok/s（输入 · 上）</span>
+        <span data-zh="Completion tok/s（输出 · 上）" data-en="Completion tok/s (output · top)"><span class="line-swatch" style="border-top-color:#15803d; border-top-style:dashed"></span>Completion tok/s（输出 · 上）</span>
+        <span data-zh="TTFT avg（ms · 中）" data-en="TTFT avg (ms · middle)"><span class="dot" style="background:#1d4ed8"></span>TTFT avg（ms · 中）</span>
+        <span data-zh="TPOT avg（ms · 下）" data-en="TPOT avg (ms · bottom)"><span class="dot" style="background:#b45309"></span>TPOT avg（ms · 下）</span>
+      </div>
+      <svg id="triChart" viewBox="0 0 960 660" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="三面板折线图">
+        <rect x="80" y="50" width="800" height="140" fill="#f0fdf4"/>
+        <rect x="80" y="240" width="800" height="140" fill="#eff6ff"/>
+        <rect x="80" y="430" width="800" height="140" fill="#fff7ed"/>
+        <line x1="80" y1="50" x2="80" y2="570" stroke="#d8d4cc" stroke-width="1"/>
+        <g stroke="#e7e3da" stroke-width="1" stroke-dasharray="3 3">
+          <line x1="80" y1="190" x2="880" y2="190"/>
+          <line x1="80" y1="155" x2="880" y2="155"/>
+          <line x1="80" y1="120" x2="880" y2="120"/>
+          <line x1="80" y1="85" x2="880" y2="85"/>
+          <line x1="80" y1="50" x2="880" y2="50"/>
+          <line x1="80" y1="380" x2="880" y2="380"/>
+          <line x1="80" y1="345" x2="880" y2="345"/>
+          <line x1="80" y1="310" x2="880" y2="310"/>
+          <line x1="80" y1="275" x2="880" y2="275"/>
+          <line x1="80" y1="240" x2="880" y2="240"/>
+          <line x1="80" y1="570" x2="880" y2="570"/>
+          <line x1="80" y1="535" x2="880" y2="535"/>
+          <line x1="80" y1="500" x2="880" y2="500"/>
+          <line x1="80" y1="465" x2="880" y2="465"/>
+          <line x1="80" y1="430" x2="880" y2="430"/>
+        </g>
+        <g font-size="11" fill="#8a857c" text-anchor="end">
+          <text x="72" y="194">0</text>
+          <text x="72" y="159">3.5k</text>
+          <text x="72" y="124">7k</text>
+          <text x="72" y="89">10.5k</text>
+          <text x="72" y="54">14k</text>
+          <text x="72" y="384">0</text>
+          <text x="72" y="349">750</text>
+          <text x="72" y="314">1500</text>
+          <text x="72" y="279">2250</text>
+          <text x="72" y="244">3000</text>
+          <text x="72" y="574">0</text>
+          <text x="72" y="539">6</text>
+          <text x="72" y="504">12</text>
+          <text x="72" y="469">18</text>
+          <text x="72" y="434">24</text>
+        </g>
+        <g font-size="11" fill="#8a857c" text-anchor="middle">
+          <text x="80" y="592">1</text>
+          <text x="146.7" y="592">2</text>
+          <text x="213.3" y="592">4</text>
+          <text x="280" y="592">6</text>
+          <text x="346.7" y="592">8</text>
+          <text x="413.3" y="592">10</text>
+          <text x="480" y="592">12</text>
+          <text x="546.7" y="592">14</text>
+          <text x="613.3" y="592">16</text>
+          <text x="680" y="592">20</text>
+          <text x="746.7" y="592">32</text>
+          <text x="813.3" y="592">48</text>
+          <text x="880" y="592">64</text>
+        </g>
+        <text x="80" y="42" font-size="12" fill="#1e3a5f" font-weight="600" data-zh="总吞吐 tok/s" data-en="Total throughput tok/s">总吞吐 tok/s</text>
+        <text x="880" y="42" font-size="11" fill="#8a857c" text-anchor="end">tok/s</text>
+        <text x="80" y="232" font-size="12" fill="#1d4ed8" font-weight="600">TTFT avg</text>
+        <text x="880" y="232" font-size="11" fill="#8a857c" text-anchor="end">ms</text>
+        <text x="80" y="422" font-size="12" fill="#b45309" font-weight="600">TPOT avg</text>
+        <text x="880" y="422" font-size="11" fill="#8a857c" text-anchor="end">ms</text>
+        <text x="480" y="628" font-size="12" fill="#57534e" text-anchor="middle" data-zh="并发（Conc）" data-en="Concurrency">并发（Conc）</text>
+        <line id="triVline" x1="-10" y1="50" x2="-10" y2="570" stroke="#57534e" stroke-width="1" stroke-dasharray="4 4" visibility="hidden"/>
+        <circle id="triHovTotal" r="5.5" fill="#1e3a5f" stroke="#fff" stroke-width="2" visibility="hidden"/>
+        <circle id="triHovTtft" r="5.5" fill="#1d4ed8" stroke="#fff" stroke-width="2" visibility="hidden"/>
+        <circle id="triHovTpot" r="5.5" fill="#b45309" stroke="#fff" stroke-width="2" visibility="hidden"/>
+        <g id="triTooltip" visibility="hidden">
+          <rect x="0" y="0" width="262" height="136" rx="5" fill="#1c1917" opacity="0.93"/>
+          <text id="triC" x="12" y="21" fill="#ffffff" font-size="12.5" font-weight="600">并发</text>
+          <circle cx="16" cy="37" r="4" fill="#1e3a5f"/><text id="triTotal" x="27" y="41" fill="#f5f5f4" font-size="12">总吞吐</text>
+          <circle cx="16" cy="57" r="4" fill="#64748b"/><text id="triPrompt" x="27" y="61" fill="#f5f5f4" font-size="12">输入</text>
+          <circle cx="16" cy="77" r="4" fill="#15803d"/><text id="triCompletion" x="27" y="81" fill="#f5f5f4" font-size="12">输出</text>
+          <circle cx="16" cy="97" r="4" fill="#1d4ed8"/><text id="triTtft" x="27" y="101" fill="#f5f5f4" font-size="12">TTFT</text>
+          <circle cx="16" cy="117" r="4" fill="#b45309"/><text id="triTpot" x="27" y="121" fill="#f5f5f4" font-size="12">TPOT</text>
+        </g>
+      </svg>
+      <script>
+        (function(){
+          var svg = document.getElementById('triChart');
+          if(!svg) return;
+          var NS = 'http://www.w3.org/2000/svg';
+          var data = [
+            {c:1, prompt:340.23, completion:56.76, total:396.99, ttft:1342.5, tpot:15.0},
+            {c:2, prompt:554.63, completion:92.53, total:647.16, ttft:1346.6, tpot:18.1},
+            {c:4, prompt:1154.34, completion:192.58, total:1346.92, ttft:1562.0, tpot:16.7},
+            {c:6, prompt:1742.63, completion:290.72, total:2033.35, ttft:1581.5, tpot:16.8},
+            {c:8, prompt:1863.89, completion:310.95, total:2174.84, ttft:1715.0, tpot:20.6},
+            {c:10, prompt:2254.36, completion:376.09, total:2630.45, ttft:1656.8, tpot:21.1},
+            {c:12, prompt:2777.81, completion:463.42, total:3241.23, ttft:1658.3, tpot:20.4},
+            {c:14, prompt:3139.04, completion:523.68, total:3662.72, ttft:1605.7, tpot:20.4},
+            {c:16, prompt:3734.00, completion:622.94, total:4356.94, ttft:1660.3, tpot:20.0},
+            {c:20, prompt:4620.95, completion:770.91, total:5391.86, ttft:1812.5, tpot:19.4},
+            {c:32, prompt:6654.72, completion:1110.20, total:7764.92, ttft:2080.4, tpot:21.3},
+            {c:48, prompt:9084.83, completion:1515.62, total:10600.45, ttft:2654.7, tpot:22.9},
+            {c:64, prompt:11900.82, completion:1985.41, total:13886.23, ttft:2910.6, tpot:22.4}
+          ];
+          var panels = {
+            tps:  {top:50,  bottom:190, max:14000},
+            ttft: {top:240, bottom:380, max:3000},
+            tpot: {top:430, bottom:570, max:24}
+          };
+          var series = [
+            {key:'total',      panel:'tps',  color:'#1e3a5f', width:2.5, dash:null},
+            {key:'prompt',     panel:'tps',  color:'#64748b', width:1.5, dash:'5 4'},
+            {key:'completion', panel:'tps',  color:'#15803d', width:1.5, dash:'5 4'},
+            {key:'ttft',       panel:'ttft', color:'#1d4ed8', width:2,   dash:null},
+            {key:'tpot',       panel:'tpot', color:'#b45309', width:2,   dash:null}
+          ];
+          function yOf(panelKey, v){ var p=panels[panelKey]; return p.bottom - (v/p.max)*(p.bottom-p.top); }
+          var xs = data.map(function(d,i){ return 80 + i*(800/12); });
+
+          var vline = document.getElementById('triVline');
+          series.forEach(function(s){
+            var pts = data.map(function(d,i){ return xs[i].toFixed(1)+','+yOf(s.panel,d[s.key]).toFixed(1); }).join(' ');
+            var pl = document.createElementNS(NS,'polyline');
+            pl.setAttribute('points', pts);
+            pl.setAttribute('fill','none');
+            pl.setAttribute('stroke', s.color);
+            pl.setAttribute('stroke-width', s.width);
+            if(s.dash){ pl.setAttribute('stroke-dasharray', s.dash); }
+            svg.insertBefore(pl, vline);
+            data.forEach(function(d,i){
+              var c = document.createElementNS(NS,'circle');
+              c.setAttribute('cx', xs[i].toFixed(1));
+              c.setAttribute('cy', yOf(s.panel,d[s.key]).toFixed(1));
+              c.setAttribute('r', s.key === 'total' ? '3.5' : '2.5');
+              c.setAttribute('fill', s.color);
+              svg.insertBefore(c, vline);
+            });
+          });
+
+          var tooltip = document.getElementById('triTooltip');
+          var hov = {
+            total: document.getElementById('triHovTotal'),
+            ttft: document.getElementById('triHovTtft'),
+            tpot: document.getElementById('triHovTpot')
+          };
+          var ttC = document.getElementById('triC');
+          var ttTotal = document.getElementById('triTotal');
+          var ttPrompt = document.getElementById('triPrompt');
+          var ttCompletion = document.getElementById('triCompletion');
+          var ttTtft = document.getElementById('triTtft');
+          var ttTpot = document.getElementById('triTpot');
+
+          svg.addEventListener('mousemove', function(e){
+            var rect = svg.getBoundingClientRect();
+            var xv = (e.clientX - rect.left) / rect.width * 960;
+            var idx = 0, min = 1e9;
+            xs.forEach(function(x,i){ var d=Math.abs(x-xv); if(d<min){min=d;idx=i;} });
+            var d = data[idx], x = xs[idx];
+            vline.setAttribute('x1', x); vline.setAttribute('x2', x);
+            vline.setAttribute('visibility','visible');
+            hov.total.setAttribute('cx', x); hov.total.setAttribute('cy', yOf('tps', d.total).toFixed(1)); hov.total.setAttribute('visibility','visible');
+            hov.ttft.setAttribute('cx', x); hov.ttft.setAttribute('cy', yOf('ttft', d.ttft).toFixed(1)); hov.ttft.setAttribute('visibility','visible');
+            hov.tpot.setAttribute('cx', x); hov.tpot.setAttribute('cy', yOf('tpot', d.tpot).toFixed(1)); hov.tpot.setAttribute('visibility','visible');
+            var en = window.__LANG__ === 'en';
+            ttC.textContent = (en ? 'Conc ' : '并发 ') + d.c;
+            ttTotal.textContent = (en ? 'Total ' : '总吞吐 ') + d.total.toFixed(1) + ' tok/s';
+            ttPrompt.textContent = (en ? 'Prompt (in) ' : '输入 Prompt ') + d.prompt.toFixed(1) + ' tok/s';
+            ttCompletion.textContent = (en ? 'Completion (out) ' : '输出 Completion ') + d.completion.toFixed(1) + ' tok/s';
+            ttTtft.textContent = 'TTFT ' + d.ttft.toFixed(1) + ' ms';
+            ttTpot.textContent = 'TPOT ' + d.tpot.toFixed(1) + ' ms';
+            var tx = x > 640 ? x - 276 : x + 14;
+            tooltip.setAttribute('transform', 'translate('+tx+',50)');
+            tooltip.setAttribute('visibility','visible');
+          });
+          svg.addEventListener('mouseleave', function(){
+            vline.setAttribute('visibility','hidden');
+            tooltip.setAttribute('visibility','hidden');
+            hov.total.setAttribute('visibility','hidden');
+            hov.ttft.setAttribute('visibility','hidden');
+            hov.tpot.setAttribute('visibility','hidden');
+          });
+        })();
+      </script>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-zh="并发" data-en="Concurrency">并发</th>
+            <th data-zh="延迟 (s)<br><span class='sub'>avg / p50 / p99 / max</span>" data-en="Latency (s)<br><span class='sub'>avg / p50 / p99 / max</span>">延迟 (s)<br><span class="sub">avg / p50 / p99 / max</span></th>
+            <th>TTFT (ms)<br><span class="sub">avg / p50 / p99 / max</span></th>
+            <th>TPOT (ms)<br><span class="sub">avg / p50 / p99 / max</span></th>
+            <th>Decode<br>toks/s</th>
+            <th>Spec.<br>Accept</th>
+            <th data-zh="Prompt tok/s<br><span class='sub'>输入</span>" data-en="Prompt tok/s<br><span class='sub'>input</span>">Prompt tok/s<br><span class="sub">输入</span></th>
+            <th data-zh="Completion tok/s<br><span class='sub'>输出</span>" data-en="Completion tok/s<br><span class='sub'>output</span>">Completion tok/s<br><span class="sub">输出</span></th>
+            <th data-zh="总吞吐 tok/s<br><span class='sub'>输入+输出</span>" data-en="Total tok/s<br><span class='sub'>in+out</span>">总吞吐 tok/s<br><span class="sub">输入+输出</span></th>
+            <th data-zh="单套 QPS<br><span class='sub'>总÷3581</span>" data-en="QPS / unit<br><span class='sub'>total÷3581</span>">单套 QPS<br><span class="sub">总÷3581</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="cell-main">1</td><td class="mono">9.020 / 8.700 / 14.350 / 14.350</td><td class="mono">1342.5 / 1203.0 / 1952.1 / 1952.1</td><td class="mono">15.0 / 13.7 / 25.2 / 25.2</td><td class="mono">66.58</td><td class="mono">77.0%</td><td class="mono">340.23</td><td class="mono">56.76</td><td class="mono">396.99</td><td class="mono">0.11</td></tr>
+          <tr class="grp"><td class="cell-main">2</td><td class="mono">10.588 / 10.540 / 15.770 / 15.770</td><td class="mono">1346.6 / 1349.9 / 1702.0 / 1702.0</td><td class="mono">18.1 / 18.2 / 28.2 / 28.2</td><td class="mono">55.31</td><td class="mono">73.7%</td><td class="mono">554.63</td><td class="mono">92.53</td><td class="mono">647.16</td><td class="mono">0.18</td></tr>
+          <tr><td class="cell-main">4</td><td class="mono">10.083 / 9.220 / 15.640 / 15.640</td><td class="mono">1562.0 / 1413.3 / 2479.9 / 2479.9</td><td class="mono">16.7 / 15.7 / 27.5 / 27.5</td><td class="mono">59.95</td><td class="mono">75.9%</td><td class="mono">1154.34</td><td class="mono">192.58</td><td class="mono">1346.92</td><td class="mono">0.38</td></tr>
+          <tr><td class="cell-main">6</td><td class="mono">10.149 / 9.490 / 18.190 / 18.190</td><td class="mono">1581.5 / 1474.8 / 2570.5 / 2570.5</td><td class="mono">16.8 / 15.4 / 31.8 / 31.8</td><td class="mono">59.63</td><td class="mono">77.9%</td><td class="mono">1742.63</td><td class="mono">290.72</td><td class="mono">2033.35</td><td class="mono">0.57</td></tr>
+          <tr><td class="cell-main">8</td><td class="mono">12.249 / 12.390 / 17.310 / 17.310</td><td class="mono">1715.0 / 1575.5 / 3573.5 / 3573.5</td><td class="mono">20.6 / 20.5 / 30.8 / 30.8</td><td class="mono">48.50</td><td class="mono">72.4%</td><td class="mono">1863.89</td><td class="mono">310.95</td><td class="mono">2174.84</td><td class="mono">0.61</td></tr>
+          <tr><td class="cell-main">10</td><td class="mono">12.432 / 12.910 / 19.620 / 19.620</td><td class="mono">1656.8 / 1394.6 / 3486.8 / 3486.8</td><td class="mono">21.1 / 22.4 / 35.9 / 35.9</td><td class="mono">47.42</td><td class="mono">75.9%</td><td class="mono">2254.36</td><td class="mono">376.09</td><td class="mono">2630.45</td><td class="mono">0.73</td></tr>
+          <tr><td class="cell-main">12</td><td class="mono">12.056 / 12.220 / 20.500 / 20.500</td><td class="mono">1658.3 / 1386.1 / 3260.3 / 3260.3</td><td class="mono">20.4 / 20.2 / 38.0 / 38.0</td><td class="mono">49.14</td><td class="mono">75.5%</td><td class="mono">2777.81</td><td class="mono">463.42</td><td class="mono">3241.23</td><td class="mono">0.91</td></tr>
+          <tr><td class="cell-main">14</td><td class="mono">12.038 / 11.990 / 18.000 / 18.000</td><td class="mono">1605.7 / 1381.5 / 3640.9 / 3640.9</td><td class="mono">20.4 / 21.0 / 33.4 / 33.4</td><td class="mono">48.97</td><td class="mono">74.4%</td><td class="mono">3139.04</td><td class="mono">523.68</td><td class="mono">3662.72</td><td class="mono">1.02</td></tr>
+          <tr><td class="cell-main">16</td><td class="mono">11.886 / 11.490 / 20.230 / 20.230</td><td class="mono">1660.3 / 1392.8 / 3629.5 / 3629.5</td><td class="mono">20.0 / 19.4 / 35.1 / 35.1</td><td class="mono">49.98</td><td class="mono">74.1%</td><td class="mono">3734.00</td><td class="mono">622.94</td><td class="mono">4356.94</td><td class="mono">1.22</td></tr>
+          <tr class="grp"><td class="cell-main">20</td><td class="mono">11.745 / 11.580 / 20.390 / 20.390</td><td class="mono">1812.5 / 1465.3 / 4773.6 / 4773.6</td><td class="mono">19.4 / 18.7 / 34.5 / 34.5</td><td class="mono">51.44</td><td class="mono">75.4%</td><td class="mono">4620.95</td><td class="mono">770.91</td><td class="mono">5391.86</td><td class="mono">1.51</td></tr>
+          <tr class="grp"><td class="cell-main">32</td><td class="mono">12.969 / 12.420 / 22.030 / 22.670</td><td class="mono">2080.4 / 1686.9 / 6075.6 / 6487.2</td><td class="mono">21.3 / 21.0 / 35.8 / 35.8</td><td class="mono">46.93</td><td class="mono">74.9%</td><td class="mono">6654.72</td><td class="mono">1110.20</td><td class="mono">7764.92</td><td class="mono">2.17</td></tr>
+          <tr><td class="cell-main">48</td><td class="mono">14.364 / 15.040 / 23.440 / 24.110</td><td class="mono">2654.7 / 2102.2 / 8490.3 / 8816.5</td><td class="mono">22.9 / 23.0 / 36.9 / 37.2</td><td class="mono">43.65</td><td class="mono">74.4%</td><td class="mono">9084.83</td><td class="mono">1515.62</td><td class="mono">10600.45</td><td class="mono">2.96</td></tr>
+          <tr class="grp"><td class="cell-main">64</td><td class="mono">14.336 / 13.910 / 26.340 / 29.650</td><td class="mono">2910.6 / 2213.0 / 10513.9 / 10594.4</td><td class="mono">22.4 / 21.5 / 37.9 / 39.5</td><td class="mono">44.72</td><td class="mono">75.7%</td><td class="mono">11900.82</td><td class="mono">1985.41</td><td class="mono">13886.23</td><td class="mono">3.88</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" data-zh="表 1 为 groupB_3072.txt 的 Per-Request Metrics 与 Workload Throughput 原始值；总吞吐 = Prompt tok/s（输入）+ Completion tok/s（输出）。单套 QPS = 总吞吐 ÷ (输入 3069 + 输出 512) = min(Prompt÷输入, Completion÷输出)。64 并发下 = 13886.23 ÷ 3581 = 3.88，prefill 与 decode 两侧恰好平衡。<b>灰线为分档选用点（2 / 20 / 32 / 64 并发）。</b>" data-en="Table 1 shows raw values from groupB_3072.txt (Per-Request Metrics and Workload Throughput); total = Prompt tok/s (input) + Completion tok/s (output). QPS per unit = total ÷ (3069 in + 512 out) = min(Prompt÷input, Completion÷output). At 64 concurrency = 13886.23 ÷ 3581 = 3.88 — prefill and decode are balanced. <b>Gray lines mark the selected tiers (2 / 20 / 32 / 64 concurrency).</b>">表 1 为 groupB_3072.txt 的 Per-Request Metrics 与 Workload Throughput 原始值；总吞吐 = Prompt tok/s（输入）+ Completion tok/s（输出）。单套 QPS = 总吞吐 ÷ (输入 3069 + 输出 512) = min(Prompt÷输入, Completion÷输出)。64 并发下 = 13886.23 ÷ 3581 = 3.88，prefill 与 decode 两侧恰好平衡。<b>灰线为分档选用点（2 / 20 / 32 / 64 并发）。</b></div>
+  </section>
+
+  <section>
+    <h2 data-zh="2 · 分档配置（体验档 → 单套配置 → 所需套数）" data-en="2 · Tiered Configuration (tier → unit config → units needed)">2 · 分档配置（体验档 → 单套配置 → 所需套数）</h2>
+    <p class="sec-sub" data-zh="按 TTFT 首字体验分四档；套数 = 目标 QPS ÷ 单套 QPS，向上取整，未含冗余。" data-en="Four tiers by TTFT time-to-first-token; units = target QPS ÷ QPS per unit, rounded up, excluding redundancy.">按 TTFT 首字体验分四档；套数 = 目标 QPS ÷ 单套 QPS，向上取整，未含冗余。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="left" data-zh="体验档" data-en="Tier">体验档</th>
+            <th>TTFT<br>avg</th>
+            <th>TTFT<br>p99</th>
+            <th>TPOT<br>avg</th>
+            <th data-zh="总吞吐<br>tok/s" data-en="Total<br>tok/s">总吞吐<br>tok/s</th>
+            <th class="left" data-zh="参考数据<br><span class='sub'>原始 avg / p50 / p99 / max</span>" data-en="Reference<br><span class='sub'>raw avg / p50 / p99 / max</span>">参考数据<br><span class="sub">原始 avg / p50 / p99 / max</span></th>
+            <th data-zh="单套<br>QPS" data-en="QPS<br>/unit">单套<br>QPS</th>
+            <th data-zh="低谷 8 QPS<br>需套数" data-en="Off-peak 8 QPS<br>units">低谷 8 QPS<br>需套数</th>
+            <th data-zh="平均 16 QPS<br>需套数" data-en="Average 16 QPS<br>units">平均 16 QPS<br>需套数</th>
+            <th data-zh="高峰 30 QPS<br>需套数" data-en="Peak 30 QPS<br>units">高峰 30 QPS<br>需套数</th>
+            <th data-zh="高峰 30 QPS<br>910B 台数<br><span class='sub'>套数×2</span>" data-en="Peak 30 QPS<br>910B nodes<br><span class='sub'>units×2</span>">高峰 30 QPS<br>910B 台数<br><span class="sub">套数×2</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="lvl"><span class="lvl-dot" style="background:#15803d"></span><span data-zh="优" data-en="Excellent">优</span></span></td>
+            <td class="mono">1.35s</td>
+            <td class="mono">1.7s</td>
+            <td class="mono">18ms</td>
+            <td class="mono">647.16</td>
+            <td class="left sub" data-zh="并发 2<br>Prompt 554.63 / Completion 92.53 / 总 647.16 tok/s<br>TTFT 1346.6 / 1349.9 / 1702.0 / 1702.0 ms<br>TPOT 18.1 / 18.2 / 28.2 / 28.2 ms<br>Lat 10.588 / 10.540 / 15.770 / 15.770 s" data-en="Conc 2<br>Prompt 554.63 / Completion 92.53 / Total 647.16 tok/s<br>TTFT 1346.6 / 1349.9 / 1702.0 / 1702.0 ms<br>TPOT 18.1 / 18.2 / 28.2 / 28.2 ms<br>Lat 10.588 / 10.540 / 15.770 / 15.770 s">并发 2<br>Prompt 554.63 / Completion 92.53 / 总 647.16 tok/s<br>TTFT 1346.6 / 1349.9 / 1702.0 / 1702.0 ms<br>TPOT 18.1 / 18.2 / 28.2 / 28.2 ms<br>Lat 10.588 / 10.540 / 15.770 / 15.770 s</td>
+            <td class="mono">0.18</td>
+            <td class="num-hl" data-zh="45 套" data-en="45 units">45 套</td>
+            <td class="num-hl" data-zh="89 套" data-en="89 units">89 套</td>
+            <td class="num-hl" data-zh="167 套" data-en="167 units">167 套</td>
+            <td class="num-hl" data-zh="334 台" data-en="334 nodes">334 台</td>
+          </tr>
+          <tr>
+            <td><span class="lvl"><span class="lvl-dot" style="background:#ca8a04"></span><span data-zh="良" data-en="Good">良</span></span></td>
+            <td class="mono">1.66s</td>
+            <td class="mono">3.6s</td>
+            <td class="mono">20ms</td>
+            <td class="mono">4356.94</td>
+            <td class="left sub" data-zh="并发 16<br>Prompt 3734.00 / Completion 622.94 / 总 4356.94 tok/s<br>TTFT 1660.3 / 1392.8 / 3629.5 / 3629.5 ms<br>TPOT 20.0 / 19.4 / 35.1 / 35.1 ms<br>Lat 11.886 / 11.490 / 20.230 / 20.230 s" data-en="Conc 16<br>Prompt 3734.00 / Completion 622.94 / Total 4356.94 tok/s<br>TTFT 1660.3 / 1392.8 / 3629.5 / 3629.5 ms<br>TPOT 20.0 / 19.4 / 35.1 / 35.1 ms<br>Lat 11.886 / 11.490 / 20.230 / 20.230 s">并发 16<br>Prompt 3734.00 / Completion 622.94 / 总 4356.94 tok/s<br>TTFT 1660.3 / 1392.8 / 3629.5 / 3629.5 ms<br>TPOT 20.0 / 19.4 / 35.1 / 35.1 ms<br>Lat 11.886 / 11.490 / 20.230 / 20.230 s</td>
+            <td class="mono">1.22</td>
+            <td class="num-hl" data-zh="7 套" data-en="7 units">7 套</td>
+            <td class="num-hl" data-zh="14 套" data-en="14 units">14 套</td>
+            <td class="num-hl" data-zh="25 套" data-en="25 units">25 套</td>
+            <td class="num-hl" data-zh="50 台" data-en="50 nodes">50 台</td>
+          </tr>
+          <tr>
+            <td><span class="lvl"><span class="lvl-dot" style="background:#ca8a04"></span><span data-zh="良" data-en="Good">良</span></span></td>
+            <td class="mono">1.81s</td>
+            <td class="mono">4.8s</td>
+            <td class="mono">19ms</td>
+            <td class="mono">5391.86</td>
+            <td class="left sub" data-zh="并发 20<br>Prompt 4620.95 / Completion 770.91 / 总 5391.86 tok/s<br>TTFT 1812.5 / 1465.3 / 4773.6 / 4773.6 ms<br>TPOT 19.4 / 18.7 / 34.5 / 34.5 ms<br>Lat 11.745 / 11.580 / 20.390 / 20.390 s" data-en="Conc 20<br>Prompt 4620.95 / Completion 770.91 / Total 5391.86 tok/s<br>TTFT 1812.5 / 1465.3 / 4773.6 / 4773.6 ms<br>TPOT 19.4 / 18.7 / 34.5 / 34.5 ms<br>Lat 11.745 / 11.580 / 20.390 / 20.390 s">并发 20<br>Prompt 4620.95 / Completion 770.91 / 总 5391.86 tok/s<br>TTFT 1812.5 / 1465.3 / 4773.6 / 4773.6 ms<br>TPOT 19.4 / 18.7 / 34.5 / 34.5 ms<br>Lat 11.745 / 11.580 / 20.390 / 20.390 s</td>
+            <td class="mono">1.51</td>
+            <td class="num-hl" data-zh="6 套" data-en="6 units">6 套</td>
+            <td class="num-hl" data-zh="11 套" data-en="11 units">11 套</td>
+            <td class="num-hl" data-zh="20 套" data-en="20 units">20 套</td>
+            <td class="num-hl" data-zh="40 台" data-en="40 nodes">40 台</td>
+          </tr>
+          <tr>
+            <td><span class="lvl"><span class="lvl-dot" style="background:#c2410c"></span><span data-zh="中" data-en="Fair">中</span></span></td>
+            <td class="mono">2.08s</td>
+            <td class="mono">6.1s</td>
+            <td class="mono">21ms</td>
+            <td class="mono">7764.92</td>
+            <td class="left sub" data-zh="并发 32<br>Prompt 6654.72 / Completion 1110.20 / 总 7764.92 tok/s<br>TTFT 2080.4 / 1686.9 / 6075.6 / 6487.2 ms<br>TPOT 21.3 / 21.0 / 35.8 / 35.8 ms<br>Lat 12.969 / 12.420 / 22.030 / 22.670 s" data-en="Conc 32<br>Prompt 6654.72 / Completion 1110.20 / Total 7764.92 tok/s<br>TTFT 2080.4 / 1686.9 / 6075.6 / 6487.2 ms<br>TPOT 21.3 / 21.0 / 35.8 / 35.8 ms<br>Lat 12.969 / 12.420 / 22.030 / 22.670 s">并发 32<br>Prompt 6654.72 / Completion 1110.20 / 总 7764.92 tok/s<br>TTFT 2080.4 / 1686.9 / 6075.6 / 6487.2 ms<br>TPOT 21.3 / 21.0 / 35.8 / 35.8 ms<br>Lat 12.969 / 12.420 / 22.030 / 22.670 s</td>
+            <td class="mono">2.17</td>
+            <td class="num-hl" data-zh="4 套" data-en="4 units">4 套</td>
+            <td class="num-hl" data-zh="8 套" data-en="8 units">8 套</td>
+            <td class="num-hl" data-zh="14 套" data-en="14 units">14 套</td>
+            <td class="num-hl" data-zh="28 台" data-en="28 nodes">28 台</td>
+          </tr>
+          <tr>
+            <td><span class="lvl"><span class="lvl-dot" style="background:#b91c1c"></span><span data-zh="差" data-en="Poor">差</span></span></td>
+            <td class="mono">2.91s</td>
+            <td class="mono">10.5s</td>
+            <td class="mono">22ms</td>
+            <td class="mono">13886.23</td>
+            <td class="left sub" data-zh="并发 64<br>Prompt 11900.82 / Completion 1985.41 / 总 13886.23 tok/s<br>TTFT 2910.6 / 2213.0 / 10513.9 / 10594.4 ms<br>TPOT 22.4 / 21.5 / 37.9 / 39.5 ms<br>Lat 14.336 / 13.910 / 26.340 / 29.650 s" data-en="Conc 64<br>Prompt 11900.82 / Completion 1985.41 / Total 13886.23 tok/s<br>TTFT 2910.6 / 2213.0 / 10513.9 / 10594.4 ms<br>TPOT 22.4 / 21.5 / 37.9 / 39.5 ms<br>Lat 14.336 / 13.910 / 26.340 / 29.650 s">并发 64<br>Prompt 11900.82 / Completion 1985.41 / 总 13886.23 tok/s<br>TTFT 2910.6 / 2213.0 / 10513.9 / 10594.4 ms<br>TPOT 22.4 / 21.5 / 37.9 / 39.5 ms<br>Lat 14.336 / 13.910 / 26.340 / 29.650 s</td>
+            <td class="mono">3.88</td>
+            <td class="num-hl" data-zh="3 套" data-en="3 units">3 套</td>
+            <td class="num-hl" data-zh="5 套" data-en="5 units">5 套</td>
+            <td class="num-hl" data-zh="8 套" data-en="8 units">8 套</td>
+            <td class="num-hl" data-zh="16 台" data-en="16 nodes">16 台</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" data-zh="体验分级标准：TTFT 首字时间 优 小于 1.5s / 良 1.5~2s / 中 2~2.5s / 差 大于 2.5s；TPOT 每 token 间隔小于 25ms 全程达标。<br>1 套 = 1 台 Prefill 节点 + 1 台 Decode 节点（1P1D）= <b>2 台 Ascend 910B 313T</b>，910B 台数 = 套数 × 2。<br>套数未含冗余，生产建议再加 20~30%。" data-en="Tier criteria: TTFT time-to-first-token — Excellent &lt;1.5s / Good 1.5~2s / Fair 2~2.5s / Poor &gt;2.5s; TPOT per-token interval &lt;25ms throughout.<br>1 unit = 1 Prefill node + 1 Decode node (1P1D) = <b>2 × Ascend 910B 313T</b>; 910B nodes = units × 2.<br>Unit counts exclude redundancy; add 20~30% for production.">体验分级标准：TTFT 首字时间 优 小于 1.5s / 良 1.5~2s / 中 2~2.5s / 差 大于 2.5s；TPOT 每 token 间隔小于 25ms 全程达标。<br>1 套 = 1 台 Prefill 节点 + 1 台 Decode 节点（1P1D）= <b>2 台 Ascend 910B 313T</b>，910B 台数 = 套数 × 2。<br>套数未含冗余，生产建议再加 20~30%。</div>
+  </section>
+
+  <section id="chatDemo">
+    <h2 data-zh="3 · 聊天体验模拟（实测 TTFT / TPOT 体感）" data-en="3 · Chat Experience Simulator (measured TTFT / TPOT)">3 · 聊天体验模拟（实测 TTFT / TPOT 体感）</h2>
+    <p class="sec-sub" data-zh="数据源 groupB_3072 · 选档即切换并发，发送后按该档实测 TTFT 等待首字、按 TPOT 逐 token 输出，与表 1 原始数据一致。" data-en="Source groupB_3072 · picking a tier switches concurrency; after send, the first token waits the measured TTFT and tokens stream at the measured TPOT — identical to the raw data in Table 1.">数据源 groupB_3072 · 选档即切换并发，发送后按该档实测 TTFT 等待首字、按 TPOT 逐 token 输出，与表 1 原始数据一致。</p>
+
+    <div class="tier-picker" id="tierPicker"></div>
+
+    <div class="chat-wrap">
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chat-actions">
+        <button class="quick" id="chatPresetBtn" data-zh="📝 预置问题：介绍你自己" data-en="📝 Preset: introduce yourself">📝 预置问题：介绍你自己</button>
+        <button class="quick" id="chatSkipBtn" style="display:none" data-zh="⏭ 跳过当前等待" data-en="⏭ Skip current wait">⏭ 跳过当前等待</button>
+      </div>
+      <div class="chat-status"><span class="spinner" id="chatSpinner" style="display:none"></span><span id="chatStatusText"></span></div>
+      <div class="chat-input-row">
+        <input id="chatInput" value="请介绍一下你自己" />
+        <button id="chatSendBtn" data-zh="发送" data-en="Send">发送</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  (function(){
+    var tiers = [
+      { name:{zh:'优', en:'Excellent'}, color:'#15803d', conc:2,  ttft:1346.6, tpot:18.1, qps:0.18 },
+      { name:{zh:'良', en:'Good'},      color:'#ca8a04', conc:16, ttft:1660.3, tpot:20.0, qps:1.22 },
+      { name:{zh:'良', en:'Good'},      color:'#ca8a04', conc:20, ttft:1812.5, tpot:19.4, qps:1.51 },
+      { name:{zh:'中', en:'Fair'},      color:'#c2410c', conc:32, ttft:2080.4, tpot:21.3, qps:2.17 },
+      { name:{zh:'差', en:'Poor'},      color:'#b91c1c', conc:64, ttft:2910.6, tpot:22.4, qps:3.88 }
+    ];
+    var answerZh = '你好！我是 DeepSeek V4 Flash（0731 版），跑在一套 1P1D 的 PD 分离推理架构上：Prefill 节点负责消化你的长输入，Decode 节点负责逐字流式生成，中间通过 Mooncake 混合连接器同步状态。我启用了 DSpark 推测解码，每步平均多猜 3~4 个 token，接受率约 75%，输出又快又稳。这条回复正按你选的体验档位实时模拟：首字等待由该档 TTFT 决定，之后每个 token 按 TPOT 间隔输出。整套系统部署在 Ascend 910B 上，支持 13.5 万 token 上下文，单套 64 并发总吞吐约 1.4 万 token/秒。有什么问题，尽管问我！';
+    var answerEn = 'Hi! I am DeepSeek V4 Flash (0731) on a 1P1D PD-separated stack: Prefill digests your input, Decode streams tokens, Mooncake keeps them in sync. DSpark speculative decoding (~4 tokens per step, ~75% accepted) makes output fast and smooth. This reply replays your chosen tier: the first token waits its TTFT, then tokens stream at its TPOT. Ascend 910B · 135k context · ~14k tok/s at 64 concurrency. Ask me anything!';
+
+    function isEn(){ return window.__LANG__ === 'en'; }
+    function $(id){ return document.getElementById(id); }
+    var log = $('chatLog'), statusEl = $('chatStatusText'), spinner = $('chatSpinner');
+    var input = $('chatInput'), sendBtn = $('chatSendBtn'), skipBtn = $('chatSkipBtn'), presetBtn = $('chatPresetBtn');
+    var picker = $('tierPicker');
+    var tierBtns = [];
+    var current = tiers[0];
+    var phase = 'idle', waitTimer = null, streamTimer = null;
+    var curTier = null, curBot = null, curText = '', outStart = 0;
+
+    function tName(t){ return isEn() ? t.name.en : t.name.zh; }
+    function fmt(ms){ return (ms/1000).toFixed(2) + 's'; }
+    function setStatus(html, spin){ statusEl.innerHTML = html; spinner.style.display = spin ? '' : 'none'; }
+    function autoScroll(){ log.scrollTop = log.scrollHeight; }
+    function idleStatus(){
+      return isEn()
+        ? 'Pick a tier (default: Excellent) and hit send — the first token waits its TTFT, then tokens stream at its TPOT.'
+        : '选择体验档位（默认优）后点击发送：首字等待该档 TTFT，之后按该档 TPOT 逐 token 输出。';
+    }
+    function addMsg(role, text){
+      var d = document.createElement('div');
+      d.className = 'msg ' + role;
+      if(role === 'bot'){
+        d.innerHTML = '<span class="text"></span><span class="caret"></span>';
+        d.querySelector('.text').textContent = text;
+      } else {
+        d.textContent = text;
+      }
+      log.appendChild(d); autoScroll(); return d;
+    }
+    function buildTiers(){
+      picker.innerHTML = '';
+      tierBtns = [];
+      tiers.forEach(function(t, i){
+        var b = document.createElement('button');
+        b.className = 'tier-btn' + (i === 0 ? ' active' : '');
+        b.innerHTML =
+          '<span class="t-name"><span class="lvl-dot" style="background:' + t.color + '"></span><span class="t-label"></span></span>' +
+          '<div class="t-data">TTFT <b>' + fmt(t.ttft) + '</b> · TPOT <b>' + t.tpot + 'ms</b><br>' + (isEn() ? 'Conc' : '并发') + ' <b>' + t.conc + '</b> · ' + (isEn() ? 'QPS/unit' : '单套 QPS') + ' <b>' + t.qps + '</b></div>';
+        b.querySelector('.t-label').textContent = tName(t);
+        b.addEventListener('click', function(){
+          current = t;
+          tierBtns.forEach(function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          if(phase === 'idle') setStatus(isEn()
+            ? 'Selected 「' + tName(t) + '」: TTFT ' + fmt(t.ttft) + ' / TPOT ' + t.tpot + 'ms — send to feel it.'
+            : '已选「' + tName(t) + '」档：TTFT ' + fmt(t.ttft) + ' / TPOT ' + t.tpot + 'ms，点击发送体验。', false);
+        });
+        tierBtns.push(b);
+        picker.appendChild(b);
+      });
+    }
+    buildTiers();
+
+    function beginStream(){
+      phase = 'streaming';
+      outStart = performance.now();
+      curBot = addMsg('bot', '');
+      curText = isEn() ? answerEn : answerZh;
+      setStatus(isEn()
+        ? 'Streaming at TPOT ' + curTier.tpot + ' ms/token (' + (1000/curTier.tpot).toFixed(1) + ' tok/s)…'
+        : '按 TPOT ' + curTier.tpot + ' ms/token 输出中（' + (1000/curTier.tpot).toFixed(1) + ' tok/s）…', false);
+      var batch = isEn() ? 4 : 2;
+      var i = 0;
+      streamTimer = setInterval(function(){
+        i += batch;
+        curBot.querySelector('.text').textContent = curText.slice(0, i);
+        autoScroll();
+        if(i >= curText.length){ clearInterval(streamTimer); streamTimer = null; complete(); }
+      }, Math.max(16, curTier.tpot * batch));
+    }
+    function complete(){
+      phase = 'idle';
+      var dur = performance.now() - outStart;
+      var nTok = curText.length;
+      var meta = document.createElement('span');
+      meta.className = 'meta';
+      meta.textContent = isEn()
+        ? 'TTFT ' + curTier.ttft + ' ms · TPOT ' + curTier.tpot + ' ms (' + (1000/curTier.tpot).toFixed(1) + ' tok/s) · ~' + nTok + ' tokens · streamed in ' + (dur/1000).toFixed(1) + ' s'
+        : '实测：TTFT ' + curTier.ttft + ' ms · TPOT ' + curTier.tpot + ' ms（' + (1000/curTier.tpot).toFixed(1) + ' tok/s）· ≈' + nTok + ' tokens · 输出耗时 ' + (dur/1000).toFixed(1) + ' s';
+      curBot.appendChild(meta);
+      var c = curBot.querySelector('.caret'); if(c) c.remove();
+      setStatus(isEn()
+        ? 'Done — 「' + tName(curTier) + '」: first token ' + fmt(curTier.ttft) + ', then ~' + (1000/curTier.tpot).toFixed(1) + ' tok/s.'
+        : '完成 — 「' + tName(curTier) + '」档：首字 ' + fmt(curTier.ttft) + '，之后约 ' + (1000/curTier.tpot).toFixed(1) + ' tok/s 匀速输出。', false);
+      sendBtn.disabled = false;
+      skipBtn.style.display = 'none';
+      autoScroll();
+    }
+
+    function send(){
+      if(phase !== 'idle') return;
+      var q = input.value.trim();
+      if(!q) return;
+      addMsg('user', q);
+      curTier = current;
+      phase = 'waiting';
+      sendBtn.disabled = true;
+      skipBtn.style.display = '';
+      setStatus(isEn()
+        ? 'Waiting for first token — 「' + tName(curTier) + '」 TTFT ' + fmt(curTier.ttft) + ' …'
+        : '等待首字中 — 「' + tName(curTier) + '」档 TTFT ' + fmt(curTier.ttft) + ' …', true);
+      waitTimer = setTimeout(beginStream, curTier.ttft);
+    }
+    sendBtn.addEventListener('click', send);
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter') send(); });
+
+    skipBtn.addEventListener('click', function(){
+      if(phase === 'waiting'){ clearTimeout(waitTimer); waitTimer = null; beginStream(); }
+      else if(phase === 'streaming'){ clearInterval(streamTimer); streamTimer = null; curBot.querySelector('.text').textContent = curText; complete(); }
+    });
+    presetBtn.addEventListener('click', function(){
+      input.value = isEn() ? 'Introduce yourself' : '请介绍一下你自己';
+      input.focus();
+    });
+
+    addMsg('bot', isEn()
+      ? 'Hi! I am the DeepSeek V4 Flash experience simulator. Pick a tier above (Excellent / Good / Good / Fair / Poor), then hit send: the first token waits the measured TTFT, then tokens stream at the measured TPOT. The preset question is ready — just send it.'
+      : '你好，我是 DeepSeek V4 Flash 体验模拟器。在上面选一个体验档（优 / 良 / 良 / 中 / 差），点发送：首字按该档实测 TTFT 等待，之后按 TPOT 逐 token 输出。预置问题已填好，直接发送即可。');
+    setStatus(idleStatus(), false);
+
+    window.__onLang = function(){
+      buildTiers();
+      input.value = isEn() ? 'Introduce yourself' : '请介绍一下你自己';
+      if(phase === 'idle') setStatus(idleStatus(), false);
+    };
+  })();
+  </script>
+
+</div>
+
+<script>
+  (function(){
+    window.__LANG__ = 'zh';
+    function applyLang(lang){
+      window.__LANG__ = lang;
+      document.querySelectorAll('[data-zh]').forEach(function(el){
+        var v = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-zh');
+        if(v === null || v === '') return;
+        if(el.namespaceURI === 'http://www.w3.org/2000/svg'){
+          el.textContent = v;
+        } else {
+          el.innerHTML = v;
+        }
+      });
+      document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      if(window.__onLang) window.__onLang(lang);
+    }
+    document.getElementById('btnZh').addEventListener('click', function(){ applyLang('zh'); });
+    document.getElementById('btnEn').addEventListener('click', function(){ applyLang('en'); });
+  })();
+</script>
+
+</body>
+</html>

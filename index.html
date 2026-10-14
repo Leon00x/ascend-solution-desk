@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f6f3" />
+  <title>昇腾算力选型台</title>
+  <style>
+    :root {
+      --paper: #f7f6f3;
+      --white: #fff;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --line: #e5e2dc;
+      --line-dark: #c9c4bb;
+      --red: #1e3a5f;
+      --red-soft: #eef1f5;
+      --teal: #15803d;
+      --teal-soft: #e0f1ed;
+      --navy: #17333d;
+      --gold: #c58a28;
+      --shadow: 0 14px 36px rgba(29, 55, 61, .07);
+      --sans: "Inter", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(0,123,114,.27); outline-offset: 2px; }
+    .shell { min-height: 100vh; }
+    .topbar { height: 68px; padding: 0 5vw; display: flex; align-items: center; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.88); gap: 36px; position: sticky; top: 0; z-index: 5; backdrop-filter: blur(12px); }
+    .brand { display:flex; align-items:center; gap:11px; min-width: 246px; }
+    .brand-mark { width: 34px; height: 34px; display:grid; place-items:center; color:white; background:var(--red); font-weight:800; font-size:17px; clip-path: polygon(0 0,100% 0,100% 76%,76% 100%,0 100%); }
+    .brand-name { font-size: 15px; font-weight: 730; letter-spacing: .04em; }
+    .brand-sub { color: var(--muted); font-size: 10px; letter-spacing: .13em; margin-top: 2px; }
+    .nav { display:flex; align-items:center; gap: 6px; height:100%; }
+    .nav button { border:0; background:transparent; color:var(--muted); height:100%; padding:0 17px; position:relative; font-weight:600; }
+    .nav button.active { color:var(--ink); }
+    .nav button.active:after { content:""; position:absolute; bottom:-1px; left:17px; right:17px; height:3px; background:var(--red); }
+    .right-head { margin-left:auto; display:flex; align-items:center; gap:13px; color:var(--muted); font-size:12px; }
+    .live { display:flex; gap:7px; align-items:center; }
+    .live i { width:7px; height:7px; border-radius:50%; background:#25a283; box-shadow:0 0 0 3px #e0f1ed; }
+    .region { padding:8px 11px; border:1px solid var(--line); background:white; color:var(--ink); border-radius:4px; }
+    main { max-width: 1440px; margin:auto; padding: 30px 5vw 60px; }
+    .view { display:none; }
+    .view.active { display:block; }
+    .hero { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; margin-bottom:23px; }
+    .eyebrow { color:var(--red); font-size:11px; font-weight:750; letter-spacing:.11em; text-transform:uppercase; margin-bottom:10px; }
+    h1 { margin:0; font-size:clamp(26px,3vw,37px); letter-spacing:-.04em; line-height:1.18; font-weight:740; }
+    .hero p { margin:10px 0 0; max-width:650px; color:var(--muted); line-height:1.7; }
+    .stamp { border-left:2px solid var(--line-dark); padding:3px 0 3px 15px; color:var(--muted); font-size:11px; line-height:1.7; white-space:nowrap; }
+    .stamp strong { color:var(--ink); font-size:12px; display:block; }
+    .scenario-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-bottom:19px; }
+    .scenario { border:1px solid var(--line); background:rgba(255,255,255,.7); padding:23px 23px 18px; display:flex; flex-direction:column; align-items:stretch; gap:0; text-align:left; color:var(--ink); transition:border-color .16s, background .16s; min-height:222px; }
+    .scenario:hover { border-color:var(--line-dark); background:white; }
+    .scenario.selected { border-color:var(--red); box-shadow:inset 3px 0 var(--red); background:white; }
+    .scenario-icon { width:38px; height:38px; display:grid; place-items:center; color:var(--red); background:var(--red-soft); font-size:17px; font-weight:750; flex:0 0 auto; }
+    .scenario:nth-child(2) .scenario-icon { color:var(--teal); background:var(--teal-soft); }
+    .scenario:nth-child(3) .scenario-icon { color:#9c6715; background:#f8efd9; }
+    .scenario-text { flex:1; display:block; }
+    .scenario-title-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+    .scenario-title { font-weight:730; font-size:19px; line-height:1.3; }
+    .scenario-desc { display:block; font-size:12px; color:var(--muted); line-height:1.7; min-height:62px; }
+    .scenario-fit { display:block; border-top:1px solid var(--line); padding-top:14px; margin-top:16px; color:var(--ink); font-size:12px; font-weight:650; text-align:left; }
+    .scenario-fit small { display:block; margin:0 0 6px; color:var(--muted); font-weight:500; font-size:10px; }
+    .workspace { display:grid; grid-template-columns:1fr; gap:18px; align-items:start; }
+    .scene-top { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(290px,.65fr); gap:20px; }
+    .scene-top .scene-intro { border:0; margin:0; padding:0; }
+    .assumption-box { background:#f7f8f6; border:1px solid var(--line); padding:15px 17px; }
+    .assumption-box h3 { font-size:12px; margin:0 0 9px; }
+    .assumption-box p { margin:0; color:var(--muted); font-size:11px; line-height:1.7; }
+    .planning-bar { display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px solid var(--line); margin-top:20px; padding-top:18px; }
+    .planning-bar h3 { font-size:15px; margin:0 0 4px; }
+    .planning-bar p { color:var(--muted); font-size:11px; margin:0; line-height:1.5; }
+    .demand-input { display:flex; align-items:center; gap:8px; white-space:nowrap; color:var(--muted); font-size:11px; }
+    .demand-input input { width:74px; border:1px solid var(--line-dark); padding:7px 8px; text-align:right; color:var(--ink); font-weight:700; }
+    .tier-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:9px; margin-top:14px; }
+    .tier-card { border:1px solid var(--line); background:white; padding:13px; text-align:left; color:var(--ink); min-height:186px; }
+    .tier-card:hover { border-color:var(--line-dark); }
+    .tier-card.selected { border:2px solid var(--red); background:#f8fafc; padding:12px; }
+    .tier-card .tier-name { display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:14px; font-weight:750; }
+    .tier-card .tier-name i { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:6px; }
+    .tier-card .tier-conc { color:var(--muted); font-size:10px; margin:7px 0 10px; }
+    .tier-card .tier-metric { display:flex; justify-content:space-between; gap:6px; font-size:10px; padding:4px 0; border-bottom:1px solid #f0f1ee; color:var(--muted); }
+    .tier-card .tier-metric b { color:var(--ink); font-weight:650; }
+    .tier-card .tier-need { border-top:1px solid var(--line); margin-top:11px; padding-top:10px; color:var(--muted); font-size:10px; }
+    .tier-card .tier-need strong { display:block; font-size:17px; color:var(--red); margin-top:3px; }
+    .plan-bottom { display:grid; grid-template-columns:minmax(0,.8fr) minmax(360px,1.2fr); gap:15px; margin-top:17px; }
+    .plan-bottom .multiplier { margin:0; padding:16px; }
+    .plan-bottom .mult-result { margin-top:14px; }
+    .mini-experience { border:1px solid var(--line); background:#fff; padding:15px; display:flex; flex-direction:column; }
+    .mini-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+    .mini-head strong { font-size:13px; }
+    .mini-head span { color:var(--muted); font-size:10px; }
+    .mini-question { color:var(--muted); font-size:11px; margin:12px 0 8px; }
+    .mini-answer { background:#f5f7f6; color:var(--ink); font-size:11px; line-height:1.65; min-height:58px; padding:10px; white-space:pre-wrap; }
+    .mini-actions { display:flex; gap:7px; margin-top:9px; }
+    .mini-actions input { flex:1; min-width:0; border:1px solid var(--line); padding:8px; font-size:11px; }
+    .mini-actions button { border:0; background:var(--red); color:white; padding:0 12px; font-size:11px; }
+    .mini-status { color:var(--muted); font-size:10px; min-height:16px; margin-top:8px; }
+    .panel { background:var(--white); border:1px solid var(--line); box-shadow:var(--shadow); }
+    .panel-head { min-height:57px; display:flex; align-items:center; justify-content:space-between; padding:0 19px; border-bottom:1px solid var(--line); }
+    .panel-title { font-weight:730; font-size:14px; }
+    .panel-note { font-size:11px; color:var(--muted); }
+    .panel-body { padding:18px 19px; }
+    .scene-intro { padding-bottom:15px; border-bottom:1px solid var(--line); margin-bottom:14px; }
+    .scene-intro h2 { font-size:20px; margin:0 0 8px; letter-spacing:-.025em; }
+    .scene-intro p { color:var(--muted); line-height:1.65; margin:0; font-size:12px; }
+    .scene-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+    .tag { color:#426067; background:#edf3f2; padding:4px 7px; font-size:10px; border-radius:3px; }
+    .config-title { display:flex; align-items:center; justify-content:space-between; margin:13px 0 9px; font-weight:700; }
+    .config-title span { font-size:11px; color:var(--muted); font-weight:450; }
+    .config-card { border:1px solid var(--line); padding:11px 12px; margin-bottom:8px; display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; }
+    .config-card.recommended { border-color:#a9d3ca; background:#f8fcfb; }
+    .config-level { font-weight:700; font-size:12px; }
+    .config-level em { font-style:normal; color:white; background:var(--teal); border-radius:2px; padding:3px 5px; font-size:9px; margin-left:6px; }
+    .config-hw { color:var(--muted); font-size:11px; margin-top:5px; }
+    .config-baseline { font-size:11px; text-align:right; color:var(--muted); }
+    .config-baseline strong { color:var(--ink); font-size:14px; display:block; margin-bottom:2px; }
+    .multiplier { margin-top:14px; padding:13px; background:#f2f6f5; border:1px solid #e2eae8; }
+    .mult-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .mult-top label { font-weight:700; font-size:12px; }
+    .stepper { display:flex; align-items:center; border:1px solid var(--line-dark); background:white; height:32px; }
+    .stepper button { border:0; background:white; width:30px; height:30px; color:var(--ink); font-size:17px; }
+    .stepper input { width:37px; text-align:center; border:0; outline:0; color:var(--ink); font-weight:700; }
+    .mult-explain { color:var(--muted); font-size:10px; line-height:1.55; margin-top:9px; }
+    .mult-result { display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid var(--line); align-items:baseline; }
+    .mult-result span { color:var(--muted); font-size:11px; }
+    .mult-result strong { color:var(--teal); font-size:20px; }
+    .mult-result small { font-size:10px; color:var(--muted); font-weight:450; }
+    .location-note { font-size:10px; line-height:1.55; color:var(--muted); margin-top:12px; }
+    .location-note b { color:var(--ink); }
+    .data-toolbar { display:flex; align-items:center; gap:7px; }
+    select { border:1px solid var(--line); color:var(--ink); background:white; border-radius:3px; height:30px; padding:0 26px 0 9px; font-size:11px; }
+    .data-area { padding:14px 18px 17px; }
+    .bench-split { display:grid; grid-template-columns:minmax(245px,.92fr) minmax(330px,1.08fr); gap:14px; align-items:start; }
+    .bench-chart { min-width:0; }
+    .bench-chart .chart-wrap { height:auto; aspect-ratio:960 / 660; margin:0; border:0; background:white; }
+    .bench-chart .chart-svg { inset:0; width:100%; height:100%; }
+    .bench-chart .chart-legend { margin:12px 0 0; flex-wrap:wrap; gap:8px 13px; }
+    .bench-table { min-width:0; }
+    .bench-table .table-head { margin:0 0 8px; }
+    .bench-table table { min-width:510px; }
+    .bench-empty { color:var(--muted); font-size:11px; padding:20px 10px; text-align:center; border:1px dashed var(--line-dark); }
+    .chart-tip { position:absolute; pointer-events:none; display:none; min-width:190px; padding:10px 12px; background:rgba(28,25,23,.94); color:white; font-size:10px; line-height:1.7; z-index:2; }
+    .chart-tip b { display:block; font-size:11px; margin-bottom:4px; }
+    .chart-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+    .chart-meta strong { font-size:12px; }
+    .chart-meta span { color:var(--muted); font-size:10px; }
+    .chart-wrap { height:227px; position:relative; border-left:1px solid var(--line); border-bottom:1px solid var(--line); margin:0 6px 10px 34px; background:repeating-linear-gradient(to bottom, transparent 0, transparent 55px, #e9efed 56px); }
+    .y-labels { position:absolute; left:-36px; top:-7px; bottom:16px; display:flex; flex-direction:column; justify-content:space-between; color:#859599; font-size:9px; }
+    .x-labels { display:flex; justify-content:space-between; position:absolute; left:0; right:0; bottom:-19px; color:#859599; font-size:9px; }
+    .chart-svg { position:absolute; inset:5px 0 0; width:100%; height:calc(100% - 5px); overflow:visible; }
+    .chart-legend { display:flex; gap:16px; align-items:center; margin:27px 0 0 34px; font-size:10px; color:var(--muted); }
+    .legend-item { display:flex; align-items:center; gap:6px; }
+    .legend-line { width:16px; height:3px; background:var(--red); }
+    .legend-line.alt { background:var(--teal); }
+    .chart-badge { margin-left:auto; color:#896017; background:#fbf2dd; padding:4px 7px; border-radius:2px; font-size:9px; }
+    .table-head { display:flex; justify-content:space-between; align-items:center; margin:19px 0 8px; }
+    .table-head strong { font-size:12px; }
+    .table-head span { color:var(--muted); font-size:10px; }
+    .table-scroll { overflow-x:auto; }
+    table { border-collapse:collapse; width:100%; min-width:540px; font-size:10px; }
+    th { color:var(--muted); text-align:left; background:#f5f8f7; font-weight:600; border-block:1px solid var(--line); padding:9px 8px; white-space:nowrap; }
+    td { padding:9px 8px; border-bottom:1px solid #edf1f0; white-space:nowrap; }
+    tbody tr:hover { background:#fafcfb; }
+    .good { color:var(--teal); font-weight:700; }
+    .source { color:#8a651f; }
+    .disclaimer { color:#9a6d22; font-size:10px; margin-top:11px; line-height:1.55; display:flex; gap:6px; }
+    .chat-layout { display:grid; grid-template-columns: 1fr 330px; gap:18px; margin-top:8px; }
+    .chat-main { min-height:620px; display:flex; flex-direction:column; }
+    .chat-head { padding:17px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+    .model-meta { display:flex; align-items:center; gap:11px; }
+    .model-chip { width:34px; height:34px; display:grid; place-items:center; background:var(--navy); color:white; font-size:10px; font-weight:800; }
+    .model-name { font-weight:700; }
+    .model-sub { color:var(--muted); font-size:10px; margin-top:4px; }
+    .chat-status { color:var(--teal); font-size:10px; }
+    .messages { padding:22px; flex:1; overflow:auto; display:flex; flex-direction:column; gap:17px; }
+    .msg { max-width:78%; display:flex; flex-direction:column; gap:6px; }
+    .msg.user { align-self:flex-end; align-items:flex-end; }
+    .msg-label { color:var(--muted); font-size:10px; }
+    .bubble { padding:12px 14px; background:#f0f5f4; border:1px solid #e3ebea; line-height:1.7; font-size:12px; }
+    .msg.user .bubble { background:var(--navy); border-color:var(--navy); color:white; }
+    .composer { border-top:1px solid var(--line); padding:15px; }
+    .prompt-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+    .prompt-chip { border:1px solid var(--line); color:var(--muted); background:white; border-radius:20px; padding:6px 9px; font-size:10px; }
+    .prompt-chip:hover { border-color:var(--teal); color:var(--teal); }
+    .input-row { display:flex; border:1px solid var(--line-dark); padding:5px; gap:7px; background:white; }
+    .input-row input { flex:1; border:0; outline:none; padding:7px 9px; min-width:0; color:var(--ink); }
+    .send { border:0; background:var(--red); color:white; padding:0 16px; font-size:11px; font-weight:650; }
+    .chat-side .panel-body { padding:16px; }
+    .side-label { font-weight:700; font-size:12px; margin-bottom:11px; }
+    .side-stat { display:flex; justify-content:space-between; border-bottom:1px solid #edf1f0; padding:9px 0; color:var(--muted); font-size:11px; }
+    .side-stat strong { color:var(--ink); }
+    .health { color:var(--teal)!important; }
+    .performance-band { margin-top:13px; background:#f2f7f6; padding:12px; }
+    .band-title { font-size:10px; color:var(--muted); }
+    .band-value { font-size:21px; font-weight:750; margin:4px 0; }
+    .band-value small { font-size:10px; color:var(--muted); font-weight:500; }
+    .band-foot { color:var(--muted); font-size:9px; line-height:1.55; }
+    .page-foot { display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:15px; color:#839295; font-size:10px; margin-top:22px; }
+    .data-view-grid { display:grid; grid-template-columns:1fr; }
+    .data-view-grid .panel { margin-top:4px; }
+    .data-view-grid .data-area { padding:22px 24px; }
+    .data-view-grid .chart-wrap { height:300px; }
+    .modal-backdrop { display:none; position:fixed; inset:0; background:rgba(16,35,42,.35); z-index:10; align-items:center; justify-content:center; padding:20px; }
+    .modal-backdrop.open { display:flex; }
+    .modal { max-width:540px; width:100%; background:white; padding:26px; box-shadow:0 22px 65px rgba(10,35,40,.22); }
+    .modal h2 { margin:0 0 10px; }
+    .modal p { color:var(--muted); line-height:1.7; }
+    .modal button { background:var(--navy); color:white; border:0; padding:9px 15px; margin-top:8px; }
+    @media(max-width:1050px) { .topbar{padding:0 22px;gap:18px}.brand{min-width:auto}.brand-sub{display:none} main{padding-inline:22px}.workspace{grid-template-columns:1fr}.chat-layout{grid-template-columns:1fr 280px}.tier-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.plan-bottom{grid-template-columns:1fr} }
+    @media(max-width:700px) { .topbar{height:auto;min-height:61px;padding:0 15px;flex-wrap:wrap;gap:0}.brand{height:58px}.right-head{margin-left:auto}.right-head .live{display:none}.nav{order:3;width:100%;height:43px;border-top:1px solid var(--line)}.nav button{padding:0 12px;font-size:11px}.nav button.active:after{left:12px;right:12px}.region{font-size:10px;padding:6px} main{padding:23px 14px 40px}.hero{display:block}.stamp{margin-top:16px;display:inline-block}.scenario-strip{grid-template-columns:1fr;gap:7px}.scenario{min-height:67px}.workspace{grid-template-columns:1fr}.panel-head{padding-inline:14px}.panel-body{padding:15px}.data-area{padding:13px}.data-toolbar select{max-width:108px}.chat-layout{grid-template-columns:1fr}.chat-main{min-height:540px}.msg{max-width:93%}.page-foot{display:block;line-height:1.8}.chart-wrap{height:190px}.bench-split{grid-template-columns:1fr}.bench-chart .chart-wrap{max-height:420px}.bench-table .table-scroll{max-width:100%} }
+    @media(max-width:700px) { .scenario-strip{grid-template-columns:1fr}.scenario{min-height:0;padding:17px}.scenario-desc{min-height:0}.scenario-fit{margin-top:12px}.scene-top{grid-template-columns:1fr}.planning-bar{align-items:flex-start;flex-direction:column}.tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tier-card{min-height:176px}.plan-bottom{grid-template-columns:1fr}.assumption-box{padding:12px} }
+    @media(max-width:420px) { .tier-grid{grid-template-columns:1fr}.tier-card{min-height:0}.tier-card .tier-metric{display:inline-flex;gap:6px;margin-right:10px;border:0}.tier-card .tier-need{margin-top:7px} }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;transition:none!important} }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">昇</div><div><div class="brand-name">昇腾算力选型台</div><div class="brand-sub">ASCEND SOLUTION DESK</div></div></div>
+    <nav class="nav" aria-label="主导航">
+      <button class="active" data-view="solutions">场景选型</button>
+      <button data-view="benchmarks">实测数据</button>
+      <button data-view="experience">性能体验</button>
+    </nav>
+    <div class="right-head"><span class="live"><i></i>演示环境</span><select class="region" id="regionSelect" aria-label="交付区域"><option value="sg">亚太 · 新加坡现货</option><option value="th">亚太 · 泰国现货</option><option value="id">亚太 · 雅加达现货</option><option value="cn">中国 · 910C</option><option value="950">海外 · 950DT 规划中</option></select></div>
+  </header>
+  <main>
+    <section class="view active" id="solutions">
+      <div class="hero">
+        <div><div class="eyebrow">Ascend solution desk</div><h1>从业务场景，找到合适的算力组合</h1><p>选择客户的工作负载，查看建议配置与参考性能。用配置倍数快速估算容量，再进入实测数据或交互体验。</p></div>
+        <div class="stamp"><strong>选型依据</strong>场景负载 × 模型 × 硬件配置<br>演示数据持续更新中</div>
+      </div>
+      <div class="scenario-strip" id="scenarioStrip"></div>
+      <div class="workspace">
+        <article class="panel">
+          <div class="panel-head"><span class="panel-title">场景配置建议</span><button id="detailBtn" style="border:0;background:transparent;color:var(--teal);font-size:11px">场景说明 ↗</button></div>
+          <div class="panel-body">
+            <div class="scene-top"><div class="scene-intro"><h2 id="sceneHeading"></h2><p id="sceneDescription"></p><div class="scene-tags" id="sceneTags"></div></div><div class="assumption-box"><h3>客户需求假设</h3><p id="assumptionText"></p></div></div>
+            <div class="planning-bar"><div><h3>按体验分档选择配置</h3><p>参考原容量规划页：每档采用对应并发点的 TTFT、TPOT 与单套 QPS；设备数量按目标峰值 QPS 向上取整。</p></div><label class="demand-input">目标峰值 <input id="targetQps" type="number" min="0.1" max="1000" step="0.1" value="30" aria-label="目标峰值 QPS"/> QPS</label></div>
+            <div class="tier-grid" id="tierGrid"></div>
+            <div class="plan-bottom"><div><div class="multiplier"><div class="mult-top"><label>所选档位 · 配置倍数</label><div class="stepper"><button id="minus" aria-label="减少配置倍数">−</button><input id="multInput" type="number" min="1" max="16" value="1" aria-label="配置倍数"/><button id="plus" aria-label="增加配置倍数">+</button></div></div><div class="mult-explain" id="multExplain"></div><div class="mult-result"><span>估算可承载峰值</span><strong id="usersResult">— <small>QPS</small></strong></div></div><div class="location-note"><b>交付提示：</b><span id="locationNote"></span></div></div><div class="mini-experience"><div class="mini-head"><strong>实际体验 · 按当前档位回放</strong><span id="miniTierMeta"></span></div><div class="mini-question">提问后按该档实测 TTFT 等待首字，再按 TPOT 逐步显示回复。</div><div class="mini-answer" id="miniAnswer">选择档位，输入问题开始体验。</div><form class="mini-actions" id="miniForm"><input id="miniInput" value="请介绍一下你自己" aria-label="体验问题"/><button type="submit" id="miniSend">发送体验</button></form><div class="mini-status" id="miniStatus">回复内容为演示文案，响应节奏按原始压测值模拟。</div></div></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><span class="panel-title">实测数据</span><div class="data-toolbar"><select id="modelFilter" aria-label="选择模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · 待采集</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter" aria-label="选择配置"><option>910B 313T · 2 台 · 1P1D</option><option>910C · 待采集</option><option>950DT · 待采集</option></select></div></div>
+          <div class="data-area">
+            <div class="bench-split"><div class="bench-chart"><div class="chart-meta"><strong>并发负载下的性能曲线</strong></div><div class="chart-wrap"><svg class="chart-svg" id="chartSvg" viewBox="0 0 960 660" preserveAspectRatio="none" aria-label="吞吐、TTFT 与 TPOT 三面板性能曲线" role="img"></svg><div class="chart-tip" id="chartTip"></div></div><div class="chart-legend"><span><i class="legend-line" style="background:#1e3a5f"></i>总吞吐</span><span><i class="legend-line" style="background:#64748b"></i>Prompt 输入</span><span><i class="legend-line" style="background:#15803d"></i>Completion 输出</span><span><i class="legend-line" style="background:#1d4ed8"></i>TTFT</span><span><i class="legend-line" style="background:#b45309"></i>TPOT</span></div></div><div class="bench-table"><div class="table-head"><strong>测试明细</strong><span id="rowCount"></span></div><div class="table-scroll"><table><thead><tr><th>并发</th><th>TTFT<br>avg / p99</th><th>TPOT<br>avg</th><th>输入<br>tok/s</th><th>输出<br>tok/s</th><th>总吞吐<br>tok/s</th><th>QPS<br>/套</th></tr></thead><tbody id="benchmarkRows"></tbody></table></div></div></div>
+            <div class="disclaimer"><span>ⓘ</span><span>实测源自 DeepSeek_V4_Flash_0731_capacity_planning.html。图表负载为输入 3,069 / 输出 512 tokens；设备为 910B 313T，1P1D（2 台），原始记录注明上下文 135K。场景并发换算仍需目标业务压测验证。</span></div>
+          </div>
+        </article>
+      </div>
+      <footer class="page-foot"><span>选型建议用于方案沟通；实际体验受模型版本、量化方式、并行策略与业务负载影响。</span><span>内部方案工具 · 数据版本 2026.10 Demo</span></footer>
+    </section>
+    <section class="view" id="benchmarks">
+      <div class="hero"><div><div class="eyebrow">Benchmark library</div><h1>把分散的实测结果，放进同一张性能地图</h1><p>按芯片、模型与负载条件筛选；后续可把各团队 Excel 的测试记录归一到同一字段。</p></div><div class="stamp"><strong>记录字段</strong>硬件 · 模型 · 并发 · 上下文<br>延迟 · 吞吐 · 数据来源</div></div>
+      <div class="data-view-grid"><article class="panel"><div class="panel-head"><span class="panel-title">模型性能参考</span><div class="data-toolbar"><select id="modelFilter2" aria-label="筛选模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · 待采集</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter2" aria-label="筛选配置"><option>910B 313T · 2 台 · 1P1D</option><option>910C · 待采集</option><option>950DT · 待采集</option></select></div></div><div class="data-area"><div class="bench-split"><div class="bench-chart"><div class="chart-meta"><strong>三面板性能曲线 · 并发为共享横轴</strong></div><div class="chart-wrap"><svg class="chart-svg" id="chartSvg2" viewBox="0 0 960 660" preserveAspectRatio="none" aria-label="吞吐、TTFT 与 TPOT 三面板性能曲线" role="img"></svg><div class="chart-tip" id="chartTip2"></div></div><div class="chart-legend"><span><i class="legend-line" style="background:#1e3a5f"></i>总吞吐</span><span><i class="legend-line" style="background:#64748b"></i>Prompt 输入</span><span><i class="legend-line" style="background:#15803d"></i>Completion 输出</span><span><i class="legend-line" style="background:#1d4ed8"></i>TTFT</span><span><i class="legend-line" style="background:#b45309"></i>TPOT</span></div></div><div class="bench-table"><div class="table-head"><strong>全部测试记录</strong><span id="rowCount2"></span></div><div class="table-scroll"><table><thead><tr><th>并发</th><th>TTFT<br>avg / p99</th><th>TPOT<br>avg</th><th>输入<br>tok/s</th><th>输出<br>tok/s</th><th>总吞吐<br>tok/s</th><th>QPS<br>/套</th></tr></thead><tbody id="benchmarkRows2"></tbody></table></div></div></div><div class="disclaimer"><span>ⓘ</span><span>当前收录 1 组可用记录。字段建议统一包含卡型与数量、模型和版本、量化精度、推理框架、输入 / 输出 token、并发、TTFT、TPOT、吞吐、测试环境及来源。</span></div></div></article></div>
+      <footer class="page-foot"><span>数据集状态：已收录 DeepSeek V4 Flash 0731 / 910B 313T 一组测试，其他模型和配置待采集。</span><span>数据版本 2026.10 Demo</span></footer>
+    </section>
+    <section class="view" id="experience">
+      <div class="hero"><div><div class="eyebrow">Inference playground</div><h1>在推荐配置上，直接体验响应节奏</h1><p>这是方案沟通用的交互演示窗口。选择场景后，右侧同步展示当前推荐配置与性能基线。</p></div><div class="stamp"><strong>当前推理配置</strong><span id="playgroundConfig"></span></div></div>
+      <div class="chat-layout"><article class="panel chat-main"><div class="chat-head"><div class="model-meta"><div class="model-chip">DS</div><div><div class="model-name" id="chatModel">DeepSeek V4 Flash 0731</div><div class="model-sub">910B 313T · 1P1D 实测配置参考</div></div></div><span class="chat-status">● 本地体验模拟</span></div><div class="messages" id="messages"></div><div class="composer"><div class="prompt-chips"><button class="prompt-chip" data-prompt="请解释这段代码的逻辑，并指出可能的性能问题。">代码审查</button><button class="prompt-chip" data-prompt="请总结这份知识库文档，并列出关键结论。">知识库问答</button><button class="prompt-chip" data-prompt="请按区域分析本季度销售趋势，并给出三条发现。">数据分析</button></div><form class="input-row" id="chatForm"><input id="chatInput" placeholder="输入一个问题，体验模型响应…" autocomplete="off"/><button class="send" type="submit">发送</button></form></div></article><aside class="panel chat-side"><div class="panel-head"><span class="panel-title">当前性能基线</span></div><div class="panel-body"><div class="side-label">方案配置</div><div class="side-stat"><span>加速卡</span><strong id="sideChip"></strong></div><div class="side-stat"><span>部署规模</span><strong id="sideNodes"></strong></div><div class="side-stat"><span>推荐模型</span><strong id="sideModel"></strong></div><div class="side-stat"><span>适用场景</span><strong id="sideScene"></strong></div><div class="performance-band"><div class="band-title">16 并发 · TTFT avg</div><div class="band-value" id="sideTtft"></div><div class="band-foot">1 套（2 台）实测；多套并发容量按线性扩展推算，需补测。</div></div><div class="performance-band"><div class="band-title">16 并发 · Decode 速度</div><div class="band-value" id="sideSpeed"></div><div class="band-foot">对应现有 910B 压测记录，输入 3,069 / 输出 512 tokens。</div></div></div></aside></div><footer class="page-foot"><span>演示对话为本地模拟，不会发送到推理服务。</span><span>由场景选型台驱动</span></footer>
+    </section>
+  </main>
+</div>
+<div class="modal-backdrop" id="sceneModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="eyebrow">Scenario brief</div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="scene-tags" id="modalTags"></div><p id="modalWorkload"></p><button id="closeModal">返回配置</button></div></div>
+<script>
+  const scenarios = [
+    { id:'coding', icon:'{ }', title:'Coding 助手', sub:'代码补全 · 仓库问答 · Agent', heading:'企业级 Coding 助手', description:'面向开发团队的代码生成、代码解释与仓库级问答。建议重点评估长上下文下的首 token 延迟，以及多人同时编码时的吞吐稳定性。', tags:['代码生成','仓库 RAG','长上下文'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B 313T（1P1D）；亚太现货地点可供进一步核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议先确认代码库规模、会话上下文长度、峰值并发以及是否需要 Agent 多步调用。'},
+    { id:'service', icon:'客服', title:'聊天机器人 / AI 客服', sub:'多轮对话 · 知识库检索 · 高可用', heading:'聊天机器人 / AI 客服', description:'适用于客服坐席辅助、在线问答与企业服务机器人。通过知识库检索回答产品与服务问题，按高峰并发和可接受等待时间选择部署规模。', tags:['多轮对话','知识库 RAG','峰值并发'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B 313T（1P1D）；亚太现货地点可供进一步核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议提供日均会话量、峰值并发、知识库规模、答案引用要求与 SLA。'},
+    { id:'chatbi', icon:'BI', title:'ChatBI 数据分析', sub:'自然语言问数 · SQL 生成 · 分析总结', heading:'ChatBI 数据分析助手', description:'面向经营分析与数据查询，通过自然语言转 SQL、指标解释和结果总结降低数据使用门槛。重点关注复杂问题的响应时间与分析任务的上下文长度。', tags:['自然语言问数','SQL 生成','指标解读'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B 313T · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B 313T（1P1D）；亚太现货地点可供进一步核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议确认数据源数量、指标口径、SQL 权限边界、问题复杂度与业务高峰时段。'}
+  ];
+  // Imported from DeepSeek_V4_Flash_0731_capacity_planning.html. Benchmark uses 910B 313T, 1P1D (2 nodes), 3069 input / 512 output tokens.
+  const data = [
+    {conc:1,lat:9.020,ttft:1342.5,ttftP99:1952.1,tpot:15.0,decode:66.58,accept:77.0,prompt:340.23,completion:56.76,total:396.99,qps:.11},
+    {conc:2,lat:10.588,ttft:1346.6,ttftP99:1702.0,tpot:18.1,decode:55.31,accept:73.7,prompt:554.63,completion:92.53,total:647.16,qps:.18},
+    {conc:4,lat:10.083,ttft:1562.0,ttftP99:2479.9,tpot:16.7,decode:59.95,accept:75.9,prompt:1154.34,completion:192.58,total:1346.92,qps:.38},
+    {conc:6,lat:10.149,ttft:1581.5,ttftP99:2570.5,tpot:16.8,decode:59.63,accept:77.9,prompt:1742.63,completion:290.72,total:2033.35,qps:.57},
+    {conc:8,lat:12.249,ttft:1715.0,ttftP99:3573.5,tpot:20.6,decode:48.50,accept:72.4,prompt:1863.89,completion:310.95,total:2174.84,qps:.61},
+    {conc:10,lat:12.432,ttft:1656.8,ttftP99:3486.8,tpot:21.1,decode:47.42,accept:75.9,prompt:2254.36,completion:376.09,total:2630.45,qps:.73},
+    {conc:12,lat:12.056,ttft:1658.3,ttftP99:3260.3,tpot:20.4,decode:49.14,accept:75.5,prompt:2777.81,completion:463.42,total:3241.23,qps:.91},
+    {conc:14,lat:12.038,ttft:1605.7,ttftP99:3640.9,tpot:20.4,decode:48.97,accept:74.4,prompt:3139.04,completion:523.68,total:3662.72,qps:1.02},
+    {conc:16,lat:11.886,ttft:1660.3,ttftP99:3629.5,tpot:20.0,decode:49.98,accept:74.1,prompt:3734.00,completion:622.94,total:4356.94,qps:1.22},
+    {conc:20,lat:11.745,ttft:1812.5,ttftP99:4773.6,tpot:19.4,decode:51.44,accept:75.4,prompt:4620.95,completion:770.91,total:5391.86,qps:1.51},
+    {conc:32,lat:12.969,ttft:2080.4,ttftP99:6075.6,tpot:21.3,decode:46.93,accept:74.9,prompt:6654.72,completion:1110.20,total:7764.92,qps:2.17},
+    {conc:48,lat:14.364,ttft:2654.7,ttftP99:8490.3,tpot:22.9,decode:43.65,accept:74.4,prompt:9084.83,completion:1515.62,total:10600.45,qps:2.96},
+    {conc:64,lat:14.336,ttft:2910.6,ttftP99:10513.9,tpot:22.4,decode:44.72,accept:75.7,prompt:11900.82,completion:1985.41,total:13886.23,qps:3.88}
+  ];
+  let selected = 0;
+  let selectedTierIndex = 2;
+  const tierDefs = [
+    {conc:2,name:'优',color:'#15803d',desc:'低等待'},
+    {conc:16,name:'良',color:'#ca8a04',desc:'体验平衡'},
+    {conc:20,name:'良',color:'#ca8a04',desc:'容量平衡'},
+    {conc:32,name:'中',color:'#c2410c',desc:'高吞吐'},
+    {conc:64,name:'差',color:'#b91c1c',desc:'高压力'}
+  ];
+  const sceneCardCopy = {
+    coding:'使用昇腾提供的主流模型推理服务（DeepSeek、GLM 等），结合 Code Agent 进行代码生成、编写和仓库问答。',
+    service:'将昇腾上的大模型与企业知识库结合，处理在线咨询、工单问答和坐席辅助，并关注高峰时段的响应体验。',
+    chatbi:'在昇腾上运行分析模型，把自然语言问题转为数据查询与结论摘要，帮助业务人员快速理解经营指标。'
+  };
+  const sceneDemand = {
+    coding:{qps:8,tier:1,text:'演示目标：峰值 8 QPS；实际项目需补充代码仓库规模、上下文长度、Agent 调用链和峰值并发。'},
+    service:{qps:30,tier:2,text:'参考容量规划案例：10 万用户、20% 日活、每人每天 30 次请求，80% 请求集中在 8 小时；峰值目标 30 QPS。单请求输入 3,069 / 输出 512 tokens。'},
+    chatbi:{qps:4,tier:1,text:'演示目标：峰值 4 QPS；实际项目需确认数据源、SQL 复杂度、权限边界和问题高峰。'}
+  };
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  function renderScenarios(){ $('#scenarioStrip').innerHTML=scenarios.map((s,i)=>`<button class="scenario ${i===selected?'selected':''}" data-index="${i}"><span class="scenario-title-row"><span class="scenario-icon">${s.icon}</span><span class="scenario-title">${s.title}</span></span><span class="scenario-text"><span class="scenario-desc">${sceneCardCopy[s.id]}</span></span><span class="scenario-fit"><small>最小配置 · 演示起点，待场景验证</small>2 台 Ascend 910B 313T · DeepSeek V4 Flash</span></button>`).join(''); $$('.scenario').forEach(b=>b.onclick=()=>selectScenario(+b.dataset.index)); }
+  function selectScenario(i){ selected=i; const s=scenarios[i], demand=sceneDemand[s.id]; selectedTierIndex=demand.tier; renderScenarios(); $('#sceneHeading').textContent=s.heading; $('#sceneDescription').textContent=s.description; $('#sceneTags').innerHTML=s.tags.map(t=>`<span class="tag">${t}</span>`).join(''); $('#assumptionText').textContent=demand.text; $('#targetQps').value=demand.qps; $('#multInput').value=1; updateLocationNote(); renderTierCards(); updateMultiplier(); renderChartAndTable(); }
+  function tierPoint(){ return data.find(d=>d.conc===tierDefs[selectedTierIndex].conc); }
+  function targetQps(){ return Math.max(.1,Math.min(1000,parseFloat($('#targetQps').value)||1)); }
+  function renderTierCards(){ const target=targetQps(); $('#tierGrid').innerHTML=tierDefs.map((t,i)=>{const d=data.find(row=>row.conc===t.conc), units=Math.ceil(target/d.qps);return `<button class="tier-card ${i===selectedTierIndex?'selected':''}" data-tier="${i}" aria-pressed="${i===selectedTierIndex}"><span class="tier-name"><span><i style="background:${t.color}"></i>${t.name} · ${t.desc}</span></span><div class="tier-conc">单套实测 ${t.conc} 并发</div><div class="tier-metric"><span>TTFT avg / p99</span><b>${(d.ttft/1000).toFixed(2)} / ${(d.ttftP99/1000).toFixed(2)}s</b></div><div class="tier-metric"><span>TPOT avg</span><b>${d.tpot.toFixed(1)}ms</b></div><div class="tier-metric"><span>单套 QPS</span><b>${d.qps.toFixed(2)}</b></div><div class="tier-need">达到 ${target} QPS 需<strong>${units} 套 · ${units*2} 台</strong></div></button>`;}).join(''); $$('.tier-card').forEach(b=>b.onclick=()=>{selectedTierIndex=+b.dataset.tier;renderTierCards();updateMultiplier();}); }
+  function updateLocationNote(){ const area=$('#regionSelect').value, place=$('#regionSelect').selectedOptions[0].textContent; let availability=''; if(area==='cn') availability=`${place}。910C 在中国境内；当前曲线来自 910B 313T，不能直接代表 910C 性能。`; else if(area==='950') availability=`${place}。950DT 性能数据尚未收录；页面中的容量仅作 910B 基线参考。`; else availability=`${place}。910B 在该地有现货；库存与交付周期请按具体项目核对。`; $('#locationNote').textContent=`${availability} ${scenarios[selected].note}`; }
+  function updateMultiplier(){ const n=Math.max(1,Math.min(16,parseInt($('#multInput').value)||1)); $('#multInput').value=n; const d=tierPoint(), base=Math.ceil(targetQps()/d.qps), units=base*n; $('#multExplain').textContent=`${base} 套基础配置 × ${n} = ${units} 套，共 ${units*2} 台 910B 313T（1P1D）。该档单套实测 ${d.qps.toFixed(2)} QPS；跨套扩容按线性估算，未计冗余。`; $('#usersResult').innerHTML=`${(units*d.qps).toFixed(2)} <small>QPS</small>`; $('#miniTierMeta').textContent=`${tierDefs[selectedTierIndex].name}档 · TTFT ${(d.ttft/1000).toFixed(2)}s · TPOT ${d.tpot.toFixed(1)}ms`; syncPlayground(); }
+  function syncPlayground(){ const s=scenarios[selected], d=tierPoint(); if(!s||!d)return; const n=Math.max(1,parseInt($('#multInput').value)||1), units=Math.ceil(targetQps()/d.qps)*n; $('#playgroundConfig').textContent=`${units} 套 · ${units*2} 台 910B 313T · DeepSeek V4 Flash 0731`; $('#chatModel').textContent='DeepSeek V4 Flash 0731'; $('#sideChip').textContent='910B 313T'; $('#sideNodes').textContent=`${units*2} 台 · ${units} 套`; $('#sideModel').textContent='DeepSeek V4 Flash 0731'; $('#sideScene').textContent=s.title; $('#sideTtft').innerHTML=`${(d.ttft/1000).toFixed(2)} <small>秒</small>`; $('#sideSpeed').innerHTML=`${d.decode.toFixed(2)} <small>tok/s</small>`; $('#sideTtft').parentElement.querySelector('.band-title').textContent=`${d.conc} 并发 · TTFT avg`; $('#sideSpeed').parentElement.querySelector('.band-title').textContent=`${d.conc} 并发 · Decode 速度`; }
+  function filteredData(chip,model){ return chip.includes('待采集')||model.includes('待采集')?[]:data; }
+  function rowsHtml(rows){ return rows.map(d=>`<tr><td>${d.conc}</td><td>${(d.ttft/1000).toFixed(2)} / ${(d.ttftP99/1000).toFixed(2)} s</td><td>${d.tpot.toFixed(1)} ms</td><td>${d.prompt.toLocaleString('en-US',{minimumFractionDigits:2})}</td><td>${d.completion.toFixed(2)}</td><td>${d.total.toLocaleString('en-US',{minimumFractionDigits:2})}</td><td>${d.qps.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="7">当前筛选条件下尚无实测记录</td></tr>'; }
+  function drawBenchmark(svg,tip,rows){
+    if(!svg)return;
+    const W=960, H=660, left=80, right=880, count=rows.length;
+    if(!count){ svg.innerHTML='<text x="480" y="330" text-anchor="middle" fill="#8a857c" font-size="15">当前筛选条件下尚无实测记录</text>'; return; }
+    const panels={total:{top:50,bottom:190,max:14000},ttft:{top:240,bottom:380,max:3000},tpot:{top:430,bottom:570,max:24}};
+    const series=[['total','total','#1e3a5f',2.7],['prompt','total','#64748b',1.4,'5 4'],['completion','total','#15803d',1.4,'5 4'],['ttft','ttft','#1d4ed8',2],['tpot','tpot','#b45309',2]];
+    const xs=rows.map((_,i)=>left+i*((right-left)/Math.max(count-1,1)));
+    const y=(panel,v)=>panels[panel].bottom-(v/panels[panel].max)*(panels[panel].bottom-panels[panel].top);
+    const pieces=['<rect x="80" y="50" width="800" height="140" fill="#f0fdf4"/>','<rect x="80" y="240" width="800" height="140" fill="#eff6ff"/>','<rect x="80" y="430" width="800" height="140" fill="#fff7ed"/>'];
+    const ticks=[['total',['0','3.5k','7k','10.5k','14k']],['ttft',['0','750','1,500','2,250','3,000']],['tpot',['0','6','12','18','24']]];
+    ticks.forEach(([key,labels])=>{const p=panels[key];labels.forEach((label,i)=>{const gy=p.bottom-i*((p.bottom-p.top)/4);pieces.push(`<line x1="${left}" y1="${gy}" x2="${right}" y2="${gy}" stroke="#e7e3da" stroke-dasharray="3 3"/><text x="72" y="${gy+4}" text-anchor="end" fill="#8a857c" font-size="10">${label}</text>`);});});
+    pieces.push(`<line x1="${left}" y1="50" x2="${left}" y2="570" stroke="#d8d4cc"/>`);
+    rows.forEach((d,i)=>pieces.push(`<text x="${xs[i]}" y="592" text-anchor="middle" fill="#8a857c" font-size="10">${d.conc}</text>`));
+    pieces.push('<text x="480" y="628" text-anchor="middle" fill="#57534e" font-size="12">并发（Concurrency）</text><text x="80" y="42" fill="#1e3a5f" font-size="12" font-weight="600">总吞吐 tok/s</text><text x="80" y="232" fill="#1d4ed8" font-size="12" font-weight="600">TTFT avg · ms</text><text x="80" y="422" fill="#b45309" font-size="12" font-weight="600">TPOT avg · ms</text>');
+    series.forEach(([key,panel,color,width,dash])=>{const pts=rows.map((d,i)=>`${xs[i]},${y(panel,d[key])}`).join(' ');pieces.push(`<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${width}" ${dash?`stroke-dasharray="${dash}"`:''} stroke-linejoin="round" stroke-linecap="round"/>`);rows.forEach((d,i)=>pieces.push(`<circle cx="${xs[i]}" cy="${y(panel,d[key])}" r="${key==='total'?3.3:2.5}" fill="${color}"/>`));});
+    pieces.push('<line id="hoverLine" x1="-10" x2="-10" y1="50" y2="570" stroke="#57534e" stroke-dasharray="4 4" visibility="hidden"/>');
+    svg.innerHTML=pieces.join('');
+    svg.onpointermove=e=>{const rect=svg.getBoundingClientRect(), x=(e.clientX-rect.left)/rect.width*W;let idx=0;xs.forEach((v,i)=>{if(Math.abs(v-x)<Math.abs(xs[idx]-x))idx=i;}); const d=rows[idx], line=svg.querySelector('#hoverLine');line.setAttribute('x1',xs[idx]);line.setAttribute('x2',xs[idx]);line.setAttribute('visibility','visible');tip.innerHTML=`<b>并发 ${d.conc}</b>总吞吐 ${d.total.toLocaleString('en-US',{minimumFractionDigits:2})} tok/s<br>输入 ${d.prompt.toFixed(2)} · 输出 ${d.completion.toFixed(2)} tok/s<br>TTFT ${d.ttft.toFixed(1)} ms · p99 ${(d.ttftP99/1000).toFixed(2)} s<br>TPOT ${d.tpot.toFixed(1)} ms · 单套 ${d.qps.toFixed(2)} QPS`;tip.style.display='block';const wrap=svg.parentElement, box=wrap.getBoundingClientRect(), leftPx=e.clientX-box.left+12;tip.style.left=`${Math.min(Math.max(8,leftPx),box.width-205)}px`;tip.style.top=`${Math.max(8,e.clientY-box.top-40)}px`;};
+    svg.onpointerleave=()=>{const line=svg.querySelector('#hoverLine');line.setAttribute('visibility','hidden');tip.style.display='none';};
+  }
+  function renderChartAndTable(){ const rows=filteredData($('#chipFilter').value,$('#modelFilter').value); $('#benchmarkRows').innerHTML=rowsHtml(rows); $('#rowCount').textContent=`${rows.length} 条记录`; drawBenchmark($('#chartSvg'),$('#chartTip'),rows); const rows2=filteredData($('#chipFilter2').value,$('#modelFilter2').value); $('#benchmarkRows2').innerHTML=rowsHtml(rows2); $('#rowCount2').textContent=`${rows2.length} 条记录`; drawBenchmark($('#chartSvg2'),$('#chartTip2'),rows2); }
+  $$('.nav button').forEach(b=>b.onclick=()=>{ $$('.nav button').forEach(x=>x.classList.toggle('active',x===b)); $$('.view').forEach(v=>v.classList.toggle('active',v.id===b.dataset.view)); if(b.dataset.view==='benchmarks')renderChartAndTable(); if(b.dataset.view==='experience')syncPlayground(); });
+  $('#minus').onclick=()=>{ $('#multInput').value=Math.max(1,(+$('#multInput').value||1)-1); updateMultiplier(); }; $('#plus').onclick=()=>{ $('#multInput').value=Math.min(16,(+$('#multInput').value||1)+1); updateMultiplier(); }; $('#multInput').oninput=updateMultiplier;
+  $('#chipFilter').onchange=renderChartAndTable; $('#modelFilter').onchange=renderChartAndTable; $('#chipFilter2').onchange=renderChartAndTable; $('#modelFilter2').onchange=renderChartAndTable; $('#regionSelect').onchange=updateLocationNote;
+  $('#targetQps').oninput=()=>{renderTierCards();updateMultiplier();};
+  $('#detailBtn').onclick=()=>{const s=scenarios[selected];$('#modalTitle').textContent=s.heading;$('#modalDescription').textContent=s.description;$('#modalTags').innerHTML=s.tags.map(t=>`<span class="tag">${t}</span>`).join('');$('#modalWorkload').textContent=s.workload;$('#sceneModal').classList.add('open');}; $('#closeModal').onclick=()=>$('#sceneModal').classList.remove('open'); $('#sceneModal').onclick=e=>{if(e.target.id==='sceneModal')$('#sceneModal').classList.remove('open');};
+  function addMessage(text,user=false){ const d=document.createElement('div');d.className=`msg ${user?'user':''}`;d.innerHTML=`<span class="msg-label">${user?'你':'模型回复'}</span><div class="bubble"></div>`;d.querySelector('.bubble').textContent=text;$('#messages').appendChild(d);$('#messages').scrollTop=$('#messages').scrollHeight;return d; }
+  function mockReply(text){ const s=scenarios[selected], d=tierPoint(), units=Math.ceil(targetQps()/d.qps); const lower=text.toLowerCase(); if(/并发|用户|多少人|qps/.test(lower))return `当前「${tierDefs[selectedTierIndex].name}」档单套实测 ${d.qps.toFixed(2)} QPS。按目标峰值 ${targetQps()} QPS 估算，需要 ${units} 套 1P1D，也就是 ${units*2} 台 910B 313T。该数量未含冗余，跨套扩容仍需验证。`; if(/代码|coding|仓库/.test(lower))return 'Coding 场景建议先把代码仓库索引接入检索链路，再分别评估代码补全、解释和多步 Agent 任务。请提供上下文长度和峰值并发，以便按目标响应时间调整配置。'; if(/知识库|客服|总结/.test(text))return '聊天机器人可以用大模型结合企业知识库完成多轮问答。方案中需确认知识库规模、答案引用要求和高峰会话量，再用典型问题验证正确率与首字等待体验。'; if(/销售|趋势|sql|数据/.test(lower))return 'ChatBI 试点建议先对齐指标口径、数据源权限与 SQL 边界。用真实业务问题评估查询正确率、响应时间和人工修正率。'; return `你好，我是昇腾推理方案体验窗口。你正在查看「${s.title}」的「${tierDefs[selectedTierIndex].name}」档。当前这条回复按该档实测首字等待与逐 token 间隔回放；你可以继续询问容量、模型或部署问题。`; }
+  function streamText(target,text,tpot,onProgress,onDone){ let offset=0; const batch=2, timer=setInterval(()=>{offset=Math.min(text.length,offset+batch);target.textContent=text.slice(0,offset);if(onProgress)onProgress();if(offset>=text.length){clearInterval(timer);if(onDone)onDone();}},Math.max(16,tpot*batch)); }
+  let miniBusy=false;
+  $('#miniForm').onsubmit=e=>{e.preventDefault();if(miniBusy)return;const q=$('#miniInput').value.trim();if(!q)return;miniBusy=true;const d=tierPoint(), tier=tierDefs[selectedTierIndex], reply=mockReply(q);$('#miniSend').disabled=true;$('#miniAnswer').textContent='';$('#miniStatus').textContent=`等待首字 · ${tier.name}档 TTFT ${(d.ttft/1000).toFixed(2)} 秒`;setTimeout(()=>{ $('#miniStatus').textContent=`逐步输出 · TPOT ${d.tpot.toFixed(1)} ms`;streamText($('#miniAnswer'),reply,d.tpot,null,()=>{$('#miniStatus').textContent=`完成 · 首字 ${(d.ttft/1000).toFixed(2)} 秒 · TPOT ${d.tpot.toFixed(1)} ms（回复内容为演示文案）`;$('#miniSend').disabled=false;miniBusy=false;});},d.ttft);};
+  let chatBusy=false;
+  $('#chatForm').onsubmit=e=>{e.preventDefault();if(chatBusy)return;const input=$('#chatInput'), q=input.value.trim();if(!q)return;chatBusy=true;const d=tierPoint(), tier=tierDefs[selectedTierIndex], reply=mockReply(q);addMessage(q,true);input.value='';$('.chat-status').textContent=`等待首字 · ${tier.name}档 ${(d.ttft/1000).toFixed(2)} 秒`;$('.send').disabled=true;setTimeout(()=>{const bubble=addMessage('',false).querySelector('.bubble');$('.chat-status').textContent=`输出中 · TPOT ${d.tpot.toFixed(1)} ms`;streamText(bubble,reply,d.tpot,()=>{$('#messages').scrollTop=$('#messages').scrollHeight;},()=>{$('.chat-status').textContent=`完成 · TTFT ${(d.ttft/1000).toFixed(2)}s · TPOT ${d.tpot.toFixed(1)}ms`;$('.send').disabled=false;chatBusy=false;});},d.ttft);};
+  $$('.prompt-chip').forEach(b=>b.onclick=()=>{ $('#chatInput').value=b.dataset.prompt; $('#chatInput').focus(); });
+  selectScenario(0); addMessage('你好，我是昇腾方案体验窗口。请选择场景与体验档位，再发送问题；回复会按该档实测 TTFT 和 TPOT 节奏回放。');
+</script>
+</body>
+</html>
