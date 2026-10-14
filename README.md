@@ -5,8 +5,8 @@
 当前包含：
 
 - Coding、聊天机器人 / AI 客服、ChatBI 场景卡片
-- 默认选择 Ascend 910B；基于 DeepSeek V4 Flash 0731 实测数据，以及 Coding 场景 GLM-5.3 Mock 数据的体验分档与容量估算
-- 分档区域可切换 910B、910C 和 950DT；后两种卡型暂无数据，界面显示待采集
+- 聊天机器人与 ChatBI 默认使用 Ascend 910B 的 DeepSeek V4 Flash 0731 实测数据；Coding 最小配置为 2 台 Ascend 910C，GLM-5.3 性能为 Mock 数据
+- 分档区域可切换 910B、910C 和 950DT；当前仅 DeepSeek / 910B 有实测、GLM-5.3 / 910C 有 Mock，其余组合待采集
 - 吞吐、TTFT、TPOT 图表和测试明细
 - 按所选档位的 TTFT、TPOT 节奏回放的聊天体验
 
