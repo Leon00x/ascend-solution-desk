@@ -1,0 +1,13 @@
+{
+  "name": "ascend-solution-desk",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {"node": ">=20"},
+  "description": "Static Ascend scenario planning demo",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "happy-dom": "^21.0.1"
+  }
+}

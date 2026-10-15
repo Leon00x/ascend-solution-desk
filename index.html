@@ -88,9 +88,6 @@
     .tier-card .tier-metric b { color:var(--ink); font-weight:650; }
     .tier-card .tier-need { border-top:1px solid var(--line); margin-top:11px; padding-top:10px; color:var(--muted); font-size:10px; }
     .tier-card .tier-need strong { display:block; font-size:17px; color:var(--red); margin-top:3px; }
-    .plan-bottom { display:grid; grid-template-columns:minmax(0,.8fr) minmax(360px,1.2fr); gap:15px; margin-top:17px; }
-    .plan-bottom .multiplier { margin:0; padding:16px; }
-    .plan-bottom .mult-result { margin-top:14px; }
     .mini-experience { border:1px solid var(--line); background:#fff; padding:15px; display:flex; flex-direction:column; }
     .mini-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
     .mini-head strong { font-size:13px; }
@@ -127,17 +124,6 @@
     .config-hw { color:var(--muted); font-size:11px; margin-top:5px; }
     .config-baseline { font-size:11px; text-align:right; color:var(--muted); }
     .config-baseline strong { color:var(--ink); font-size:14px; display:block; margin-bottom:2px; }
-    .multiplier { margin-top:14px; padding:13px; background:#f2f6f5; border:1px solid #e2eae8; }
-    .mult-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
-    .mult-top label { font-weight:700; font-size:12px; }
-    .stepper { display:flex; align-items:center; border:1px solid var(--line-dark); background:white; height:32px; }
-    .stepper button { border:0; background:white; width:30px; height:30px; color:var(--ink); font-size:17px; }
-    .stepper input { width:37px; text-align:center; border:0; outline:0; color:var(--ink); font-weight:700; }
-    .mult-explain { color:var(--muted); font-size:10px; line-height:1.55; margin-top:9px; }
-    .mult-result { display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid var(--line); align-items:baseline; }
-    .mult-result span { color:var(--muted); font-size:11px; }
-    .mult-result strong { color:var(--teal); font-size:20px; }
-    .mult-result small { font-size:10px; color:var(--muted); font-weight:450; }
     .data-toolbar { display:flex; align-items:center; gap:7px; }
     select { border:1px solid var(--line); color:var(--ink); background:white; border-radius:3px; height:30px; padding:0 26px 0 9px; font-size:11px; }
     .data-area { padding:14px 18px 17px; }
@@ -175,37 +161,6 @@
     .good { color:var(--teal); font-weight:700; }
     .source { color:#8a651f; }
     .disclaimer { color:#9a6d22; font-size:10px; margin-top:11px; line-height:1.55; display:flex; gap:6px; }
-    .chat-layout { display:grid; grid-template-columns: 1fr 330px; gap:18px; margin-top:8px; }
-    .chat-main { min-height:620px; display:flex; flex-direction:column; }
-    .chat-head { padding:17px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
-    .model-meta { display:flex; align-items:center; gap:11px; }
-    .model-chip { width:34px; height:34px; display:grid; place-items:center; background:var(--navy); color:white; font-size:10px; font-weight:800; }
-    .model-name { font-weight:700; }
-    .model-sub { color:var(--muted); font-size:10px; margin-top:4px; }
-    .chat-status { color:var(--teal); font-size:10px; }
-    .messages { padding:22px; flex:1; overflow:auto; display:flex; flex-direction:column; gap:17px; }
-    .msg { max-width:78%; display:flex; flex-direction:column; gap:6px; }
-    .msg.user { align-self:flex-end; align-items:flex-end; }
-    .msg-label { color:var(--muted); font-size:10px; }
-    .bubble { padding:12px 14px; background:#f0f5f4; border:1px solid #e3ebea; line-height:1.7; font-size:12px; }
-    .msg.user .bubble { background:var(--navy); border-color:var(--navy); color:white; }
-    .composer { border-top:1px solid var(--line); padding:15px; }
-    .prompt-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
-    .prompt-chip { border:1px solid var(--line); color:var(--muted); background:white; border-radius:20px; padding:6px 9px; font-size:10px; }
-    .prompt-chip:hover { border-color:var(--teal); color:var(--teal); }
-    .input-row { display:flex; border:1px solid var(--line-dark); padding:5px; gap:7px; background:white; }
-    .input-row input { flex:1; border:0; outline:none; padding:7px 9px; min-width:0; color:var(--ink); }
-    .send { border:0; background:var(--red); color:white; padding:0 16px; font-size:11px; font-weight:650; }
-    .chat-side .panel-body { padding:16px; }
-    .side-label { font-weight:700; font-size:12px; margin-bottom:11px; }
-    .side-stat { display:flex; justify-content:space-between; border-bottom:1px solid #edf1f0; padding:9px 0; color:var(--muted); font-size:11px; }
-    .side-stat strong { color:var(--ink); }
-    .health { color:var(--teal)!important; }
-    .performance-band { margin-top:13px; background:#f2f7f6; padding:12px; }
-    .band-title { font-size:10px; color:var(--muted); }
-    .band-value { font-size:21px; font-weight:750; margin:4px 0; }
-    .band-value small { font-size:10px; color:var(--muted); font-weight:500; }
-    .band-foot { color:var(--muted); font-size:9px; line-height:1.55; }
     .page-foot { display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:15px; color:#839295; font-size:10px; margin-top:22px; }
     .data-view-grid { display:grid; grid-template-columns:1fr; }
     .data-view-grid .panel { margin-top:4px; }
@@ -217,11 +172,125 @@
     .modal h2 { margin:0 0 10px; }
     .modal p { color:var(--muted); line-height:1.7; }
     .modal button { background:var(--navy); color:white; border:0; padding:9px 15px; margin-top:8px; }
-    @media(max-width:1050px) { .topbar{padding:0 22px;gap:18px}.brand{min-width:auto}.brand-sub{display:none} main{padding-inline:22px}.workspace{grid-template-columns:1fr}.chat-layout{grid-template-columns:1fr 280px}.tier-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.plan-bottom{grid-template-columns:1fr} }
-    @media(max-width:700px) { .topbar{height:auto;min-height:61px;padding:0 15px;flex-wrap:wrap;gap:0}.brand{height:58px}.nav{order:3;width:100%;height:43px;border-top:1px solid var(--line)}.nav button{padding:0 12px;font-size:11px}.nav button.active:after{left:12px;right:12px} main{padding:23px 14px 40px}.hero{display:block}.stamp{margin-top:16px;display:inline-block}.scenario-strip{grid-template-columns:1fr;gap:7px}.scenario{min-height:67px}.workspace{grid-template-columns:1fr}.panel-head{padding-inline:14px}.panel-body{padding:15px}.data-area{padding:13px}.data-toolbar select{max-width:108px}.chat-layout{grid-template-columns:1fr}.chat-main{min-height:540px}.msg{max-width:93%}.page-foot{display:block;line-height:1.8}.chart-wrap{height:190px}.bench-split{grid-template-columns:1fr}.bench-chart .chart-wrap{max-height:420px}.bench-table .table-scroll{max-width:100%} }
-    @media(max-width:700px) { .scenario-strip{grid-template-columns:1fr}.scenario{min-height:0;padding:17px}.scenario-desc{min-height:0}.scenario-fit{margin-top:12px}.scene-top{grid-template-columns:1fr}.planning-bar{align-items:flex-start;flex-direction:column}.tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tier-card{min-height:176px}.plan-bottom{grid-template-columns:1fr}.assumption-box{padding:12px} }
+    @media(max-width:1050px) { .topbar{padding:0 22px;gap:18px}.brand{min-width:auto}.brand-sub{display:none} main{padding-inline:22px}.workspace{grid-template-columns:1fr}.tier-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+    @media(max-width:700px) { .topbar{height:auto;min-height:61px;padding:0 15px;flex-wrap:wrap;gap:0}.brand{height:58px}.nav{order:3;width:100%;height:43px;border-top:1px solid var(--line)}.nav button{padding:0 12px;font-size:11px}.nav button.active:after{left:12px;right:12px} main{padding:23px 14px 40px}.hero{display:block}.stamp{margin-top:16px;display:inline-block}.scenario-strip{grid-template-columns:1fr;gap:7px}.scenario{min-height:67px}.workspace{grid-template-columns:1fr}.panel-head{padding-inline:14px}.panel-body{padding:15px}.data-area{padding:13px}.data-toolbar select{max-width:108px}.page-foot{display:block;line-height:1.8}.chart-wrap{height:190px}.bench-split{grid-template-columns:1fr}.bench-chart .chart-wrap{max-height:420px}.bench-table .table-scroll{max-width:100%} }
+    @media(max-width:700px) { .scenario-strip{grid-template-columns:1fr}.scenario{min-height:0;padding:17px}.scenario-desc{min-height:0}.scenario-fit{margin-top:12px}.scene-top{grid-template-columns:1fr}.planning-bar{align-items:flex-start;flex-direction:column}.tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tier-card{min-height:176px}.assumption-box{padding:12px} }
     @media(max-width:420px) { .tier-grid{grid-template-columns:1fr}.tier-card{min-height:0}.tier-card .tier-metric{display:inline-flex;gap:6px;margin-right:10px;border:0}.tier-card .tier-need{margin-top:7px} }
     @media(prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;transition:none!important} }
+    .scenario { min-height:210px; }
+    .scenario-desc { min-height:42px; }
+    .scenario-fit small { font-size:11px; font-weight:650; color:var(--red); }
+    .scenario-baseline { display:block; font-size:10px; color:var(--muted); font-weight:450; line-height:1.6; }
+    .model-section { border-top:1px solid var(--line); margin-top:22px; padding-top:20px; }
+    .model-section-head { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px; }
+    .step-label { display:block; color:var(--red); font-size:9px; font-weight:750; letter-spacing:.12em; margin-bottom:7px; }
+    .model-section h3 { font-size:15px; margin:0; }
+    .section-hint,.preset-control { color:var(--muted); font-size:11px; }
+    .preset-control { display:flex; align-items:center; gap:8px; }
+    .business-fields { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+    .business-fields:has(> :nth-child(4):last-child) { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .target-fields { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .model-field { display:flex; flex-direction:column; gap:7px; min-width:0; }
+    .model-field > span { font-size:11px; font-weight:600; }
+    .model-field small { font-size:10px; color:var(--muted); line-height:1.5; }
+    .field-value { display:flex; align-items:center; border:1px solid var(--line-dark); background:white; padding-right:10px; }
+    .field-value:focus-within { border-color:var(--red); box-shadow:0 0 0 2px var(--red-soft); }
+    .field-value input { width:100%; min-width:0; border:0; background:transparent; padding:10px; font-size:16px; font-weight:650; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .field-value em { font-size:10px; color:var(--muted); font-style:normal; white-space:nowrap; }
+    .model-field input:invalid { outline:1px solid #b45309; outline-offset:-2px; }
+    .demand-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin-top:18px; border:1px solid #d8e1e9; background:#f4f7fa; }
+    .demand-stat { padding:15px 18px; border-right:1px solid #d8e1e9; }
+    .demand-stat:last-child { border:0; }
+    .demand-stat span { display:block; font-size:10px; color:var(--muted); margin-bottom:7px; }
+    .demand-stat strong { font-size:25px; font-weight:700; color:var(--red); letter-spacing:-.035em; font-variant-numeric:tabular-nums; }
+    .demand-stat small { font-size:10px; margin-left:6px; color:var(--muted); }
+    .formula-note { font-size:10px; color:var(--muted); line-height:1.7; margin-top:9px; }
+    .benchmark-context { display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px 18px; font-size:10px; color:var(--muted); line-height:1.7; padding:11px 0; }
+    .benchmark-context strong { color:var(--ink); font-weight:600; }
+    .benchmark-context button { border:0; padding:0; background:transparent; color:var(--red); font-size:10px; text-decoration:underline; text-underline-offset:3px; }
+    .plan-notice { border-left:3px solid var(--teal); background:#f1f7f4; padding:12px 14px; color:#305b46; font-size:11px; line-height:1.7; }
+    .plan-notice.warning { border-color:#b48336; background:#fcf7ee; color:#805b22; }
+    .tier-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .tier-card { min-height:260px; padding:17px; display:flex; flex-direction:column; }
+    .tier-card.selected { padding:16px; }
+    .tier-card:disabled { cursor:default; background:#fafaf9; color:var(--muted); }
+    .tier-card .tier-name { font-size:14px; }
+    .tier-primary { margin:12px 0; font-size:29px; font-weight:700; letter-spacing:-.04em; color:var(--red); font-variant-numeric:tabular-nums; }
+    .tier-primary small { font-size:10px; font-weight:450; letter-spacing:0; margin-left:5px; color:var(--muted); }
+    .tier-primary-label { font-size:10px; color:var(--muted); }
+    .tier-card .tier-metric { display:flex; font-size:11px; padding:6px 0; margin-right:0; border-bottom:1px solid #f0f1ee; }
+    .tier-state { font-size:10px; margin-top:11px; color:var(--teal); }
+    .tier-state.warning { color:#9a6d22; }
+    .tier-card .tier-need { margin-top:auto; padding-top:13px; }
+    .tier-card .tier-state + .tier-need { margin-top:12px; }
+    .tier-empty { font-size:12px; line-height:1.9; margin-top:24px; }
+    button:disabled { cursor:default; opacity:.65; }
+    .mini-head { flex-wrap:wrap; }
+    .chip-input select { max-width:100%; }
+    [hidden] { display:none !important; }
+    @media(max-width:1050px) { .business-fields { grid-template-columns:repeat(3,minmax(0,1fr)); }.target-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:700px) {
+      .scenario { min-height:0; }.scenario-desc { min-height:0; }
+      .model-section-head { align-items:flex-start; flex-direction:column; }
+      .business-fields,.business-fields:has(> :nth-child(4):last-child) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .demand-summary { grid-template-columns:1fr; }.demand-stat { border-right:0; border-bottom:1px solid #d8e1e9; display:flex; align-items:baseline; flex-wrap:wrap; gap:6px; padding:12px 14px; }.demand-stat span { flex:1; margin:0; }.demand-stat strong { font-size:23px; }
+      .tier-grid { grid-template-columns:1fr; }.tier-card { min-height:230px; }
+      .section-hint { line-height:1.6; }.planning-controls,.chip-input { width:100%; }.chip-input select { flex:1; min-width:0; }
+      .panel-head { flex-wrap:wrap; gap:8px; padding-block:12px; }.data-toolbar { flex-wrap:wrap; }
+    }
+    .business-fields.coding-fields { grid-template-columns:minmax(180px,.7fr) minmax(240px,1.3fr); }
+    .coding-fields #codingPreset { height:41px; font-size:14px; }
+    .coding-load-summary { grid-column:1/-1; color:var(--muted); font-size:11px; line-height:1.8; padding:11px 14px; background:#f4f7fa; border-left:3px solid var(--red); }
+    .coding-advanced { grid-column:1/-1; border:1px solid var(--line); }
+    .coding-advanced summary { padding:12px 14px; cursor:pointer; font-size:11px; color:var(--red); }
+    .coding-advanced-fields { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; padding:4px 14px 14px; }
+    @media(max-width:700px) { .business-fields.coding-fields { grid-template-columns:1fr; }.coding-advanced-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    .experience-workspace { display:grid; grid-template-columns:minmax(230px,.65fr) minmax(0,1.65fr); gap:20px; align-items:start; }
+    .experience-targets { padding:17px; background:#f7f8f6; border:1px solid var(--line); }
+    .experience-targets h4 { font-size:13px; margin:0 0 7px; }.experience-targets > p { margin:0 0 18px; color:var(--muted); font-size:11px; line-height:1.6; }
+    .experience-targets .target-fields { grid-template-columns:1fr; gap:16px; }
+    .experience-workspace .mini-experience { padding:20px; min-width:0; }
+    .mini-head strong { font-size:16px; }.preview-control { display:flex; align-items:center; gap:7px; font-size:10px; color:var(--muted); }
+    .preview-control select { max-width:180px; }.preview-meta { font-size:10px; color:var(--muted); margin-top:9px; }
+    .experience-targets .preview-control { display:flex; flex-direction:column; align-items:stretch; gap:8px; font-size:11px; font-weight:600; color:var(--ink); }
+    .experience-targets .preview-control select { width:100%; max-width:none; height:38px; font-size:12px; }
+    .preview-target-hint { margin:9px 0 18px; font-size:10px; color:var(--muted); line-height:1.7; }
+    .mini-question { font-size:11px; line-height:1.7; margin-bottom:15px; }
+    .mini-stage { height:360px; min-height:360px; max-height:360px; flex-shrink:0; overflow:auto; scrollbar-gutter:stable; padding:18px; background:#f6f8fa; border:1px solid #e3e8ed; }
+    .preview-prompt { font-size:12px; line-height:1.8; color:var(--ink); margin-bottom:20px; padding:10px 13px; background:#fff; border-left:3px solid var(--red); white-space:pre-wrap; }
+    .preview-response-label { font-size:10px; color:var(--muted); margin-bottom:9px; }
+    .mini-stage .mini-answer { font-size:13px; line-height:1.9; padding:0; background:transparent; min-height:140px; }
+    .mini-stage .chat-answer { background:white; border:1px solid var(--line); padding:14px; border-radius:0 10px 10px 10px; }
+    .preview-code { margin:0; padding:15px; overflow:auto; background:#172331; color:#d3e5f4; border:1px solid #293e52; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .mini-stage .preview-code .mini-answer { color:inherit; font-family:Consolas,'Cascadia Code',monospace; font-size:12px; white-space:pre-wrap; }
+    .preview-file { font-family:Consolas,monospace; font-size:10px; background:#213247; color:#b9cadd; padding:8px 15px; }
+    .mini-experience[data-scene="coding"] .mini-stage { background:#edf1f5; }
+    .experience-prompts { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+    .experience-prompts button { font-size:10px; padding:6px 9px; color:var(--red); background:#fff; border:1px solid #d9e1e8; }
+    .mini-actions input { padding:12px; font-size:12px; }.mini-actions button { padding-inline:16px; font-size:12px; }
+    .tier-capacity { margin-top:10px; color:var(--muted); font-size:10px; line-height:1.8; }
+    .tier-need > small { display:block; margin-top:6px; font-size:10px; line-height:1.7; }.tier-capacity strong { color:var(--red); font-size:15px; }.tier-capacity small { font-size:10px; }
+    @media(max-width:900px) { .experience-workspace { grid-template-columns:1fr; }.experience-targets .target-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:500px) { .experience-workspace .mini-experience { padding:13px; }.mini-stage { padding:12px; }.preview-control { flex-wrap:wrap; }.mini-actions { flex-wrap:wrap; }.mini-actions button { min-height:38px; }.mini-head { gap:12px; } }
+    .panel-head:has(.bench-load-filter) { flex-wrap:wrap; gap:12px; padding-block:13px; }
+    .data-toolbar:has(.bench-load-filter) { flex-wrap:wrap; justify-content:flex-end; }
+    .bench-load-filter { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--muted); }
+    .bench-load-filter select { min-width:105px; font-variant-numeric:tabular-nums; }
+    @media(max-width:700px) { .data-toolbar:has(.bench-load-filter) { justify-content:flex-start; }.bench-load-filter select { min-width:100px; } }
+    .metric-load { color:var(--red); font-size:11px; line-height:1.8; margin-top:15px; }
+    .experience-metrics { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); border:1px solid #d8e1e9; background:#f4f7fa; margin-top:9px; }
+    .experience-metric { padding:12px 10px; border-right:1px solid #d8e1e9; min-width:0; }
+    .experience-metric:last-child { border:0; }.experience-metric span { display:block; color:var(--muted); font-size:10px; line-height:1.5; }
+    .experience-metric strong { display:block; font-size:18px; color:var(--red); margin:7px 0 4px; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }.experience-metric small { font-size:9px; color:var(--muted); }
+    .metric-note { color:var(--muted); font-size:10px; line-height:1.7; margin:8px 0 14px; }
+    @media(max-width:1050px) { .demand-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }.demand-stat:nth-child(2) { border-right:0; }.demand-stat:nth-child(-n+2) { border-bottom:1px solid #d8e1e9; } }
+    @media(max-width:600px) { .experience-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }.experience-metric { border-bottom:1px solid #d8e1e9; }.experience-metric:nth-child(2n) { border-right:0; }.experience-metric:last-child { grid-column:1/-1; }.demand-stat { display:block; }.demand-stat span { margin-bottom:7px; }.demand-stat strong { font-size:21px; } }
+    .business-fields.coding-fields { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .model-choice select { width:100%; min-width:0; height:41px; font-size:12px; }
+    @media(max-width:700px) { .business-fields.coding-fields { grid-template-columns:1fr; } }
+    .coding-fields #servicePreset { width:100%; height:41px; font-size:14px; }
+    .service-advanced-fields { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    @media(max-width:700px) { .service-advanced-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } }
   </style>
 </head>
 <body>
@@ -231,13 +300,12 @@
     <nav class="nav" aria-label="主导航">
       <button class="active" data-view="solutions">场景选型</button>
       <button data-view="benchmarks">实测数据</button>
-      <button data-view="experience">性能体验</button>
     </nav>
   </header>
   <main>
     <section class="view active" id="solutions">
       <div class="hero">
-        <div><div class="eyebrow">Ascend solution desk</div><h1>昇腾云典型场景和配置选型</h1><p>选择客户的工作负载，查看建议配置与参考性能。用配置倍数快速估算容量，再进入实测数据或交互体验。</p></div>
+        <div><div class="eyebrow">Ascend solution desk</div><h1>昇腾云典型场景和配置选型</h1><p>从业务规模和响应目标出发，建立场景负载模型，再比较配置与参考容量。</p></div>
         <div class="stamp"><strong>选型依据</strong>场景负载 × 模型 × 硬件配置<br>演示数据持续更新中</div>
       </div>
       <div class="scenario-strip" id="scenarioStrip"></div>
@@ -245,14 +313,40 @@
         <article class="panel">
           <div class="panel-head"><span class="panel-title">场景配置建议</span><button id="detailBtn" style="border:0;background:transparent;color:var(--teal);font-size:11px">场景说明 ↗</button></div>
           <div class="panel-body">
-            <div class="scene-top"><div class="scene-intro"><h2 id="sceneHeading"></h2><p id="sceneDescription"></p><div class="scene-tags" id="sceneTags"></div><div class="token-highlights" id="serviceTokenHighlights" hidden aria-label="聊天机器人单请求测试负载"><div class="token-highlight"><span>单请求输入长度</span><strong>3,069</strong><small>tokens</small></div><div class="token-highlight output"><span>单请求输出长度</span><strong>512</strong><small>tokens</small></div></div></div><div class="assumption-box"><h3>客户需求假设</h3><p id="assumptionText"></p></div></div>
-            <div class="planning-bar"><div><h3>按体验分档选择配置</h3><p>按当前模型与配置的数据集展示每档 TTFT、TPOT 和单套 QPS；设备数量按目标峰值 QPS 向上取整。</p></div><div class="planning-controls"><label class="chip-input">加速卡 <select id="planChip" aria-label="选择加速卡"><option value="910B">Ascend 910B · DeepSeek 实测</option><option value="910C">Ascend 910C · Coding Mock</option><option value="950DT">Ascend 950DT · 待采集</option></select></label><label class="demand-input">目标峰值 <input id="targetQps" type="number" min="0.1" max="1000" step="0.1" value="30" aria-label="目标峰值 QPS"/> QPS</label></div></div>
+            <div class="scene-top"><div class="scene-intro"><h2 id="sceneHeading"></h2><p id="sceneDescription"></p><div class="scene-tags" id="sceneTags"></div></div><div class="assumption-box"><h3>业务建模口径</h3><p id="assumptionText"></p></div></div>
+            <div class="model-section">
+              <div class="model-section-head"><div><span class="step-label">01 / BUSINESS LOAD</span><h3>把业务规模，换算成推理需求</h3></div></div>
+              <div class="business-fields" id="businessFields"></div>
+              <div class="metric-load" id="demandLoad"></div>
+              <div class="demand-summary" id="demandSummary" aria-live="polite"></div>
+              <div class="formula-note" id="formulaNote"></div>
+            </div>
+            <div class="model-section targets-section" id="experienceStep">
+              <div class="model-section-head"><div><span class="step-label">02 / SCENARIO EXPERIENCE</span><h3>设定响应目标，体验场景效果</h3></div><span class="section-hint">先体验，再比较配置；响应节奏随所选方案联动</span></div>
+              <div class="experience-workspace">
+                <div class="experience-targets"><h4>响应目标</h4><p>先选体验档位，再按业务要求调整。</p><label class="preview-control">体验档位 <select id="previewPlan" aria-label="选择体验档位"></select></label><div class="preview-target-hint" id="previewTargetHint"></div><div class="target-fields" id="targetFields"></div></div>
+                <div class="mini-experience" id="miniExperience">
+                  <div class="mini-head"><strong id="miniTitle">聊天体验</strong></div>
+                  <div class="preview-meta" id="miniTierMeta"></div>
+                  <div class="mini-question" id="miniIntro"></div>
+                  <div class="metric-load" id="experienceLoad"></div>
+                  <div class="experience-metrics" id="experienceMetrics" aria-live="polite"></div>
+                  <div class="metric-note" id="experienceMetricNote"></div>
+                  <div class="mini-stage" id="miniStage"></div>
+                  <div class="experience-prompts" id="miniPrompts"></div>
+                  <form class="mini-actions" id="miniForm"><input id="miniInput" aria-label="体验问题"/><button type="submit" id="miniSend">发送体验</button></form>
+                  <div class="mini-status" id="miniStatus" role="status"></div>
+                </div>
+              </div>
+            </div>
+            <div class="planning-bar"><div><span class="step-label">03 / CONFIGURATION</span><h3>先满足体验目标，再比较容量</h3><p id="planStrategy"></p></div><div class="planning-controls"><label class="chip-input">加速卡 <select id="planChip" aria-label="选择加速卡"><option value="910B">Ascend 910B · DeepSeek 实测</option><option value="910C">Ascend 910C · GLM Mock</option><option value="950DT">Ascend 950DT · 待采集</option></select></label></div></div>
+            <div class="benchmark-context" id="benchmarkContext"></div>
+            <div class="plan-notice" id="planNotice" role="status"></div>
             <div class="tier-grid" id="tierGrid"></div>
-            <div class="plan-bottom"><div><div class="multiplier"><div class="mult-top"><label>所选档位 · 配置倍数</label><div class="stepper"><button id="minus" aria-label="减少配置倍数">−</button><input id="multInput" type="number" min="1" max="16" value="1" aria-label="配置倍数"/><button id="plus" aria-label="增加配置倍数">+</button></div></div><div class="mult-explain" id="multExplain"></div><div class="mult-result"><span>估算可承载峰值</span><strong id="usersResult">— <small>QPS</small></strong></div></div></div><div class="mini-experience"><div class="mini-head"><strong>实际体验 · 按当前档位回放</strong><span id="miniTierMeta"></span></div><div class="mini-question" id="miniIntro">提问后按该档 TTFT 等待首字，再按 TPOT 逐步显示回复。</div><div class="mini-answer" id="miniAnswer">选择档位，输入问题开始体验。</div><form class="mini-actions" id="miniForm"><input id="miniInput" value="请介绍一下你自己" aria-label="体验问题"/><button type="submit" id="miniSend">发送体验</button></form><div class="mini-status" id="miniStatus">回复内容为演示文案，响应节奏按原始压测值模拟。</div></div></div>
           </div>
         </article>
         <article class="panel">
-          <div class="panel-head"><span class="panel-title" id="homeDataTitle">实测数据</span><div class="data-toolbar"><select id="modelFilter" aria-label="选择模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · Mock 数据</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter" aria-label="选择配置"><option>910B · 2 台 · DeepSeek 实测</option><option>910C · 2 台 · Coding Mock</option><option>950DT · 待采集</option></select></div></div>
+          <div class="panel-head"><span class="panel-title" id="homeDataTitle">实测数据</span><div class="data-toolbar"><select id="modelFilter" aria-label="选择模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · Mock 数据</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter" aria-label="选择配置"><option>910B · 2 台 · DeepSeek 实测</option><option>910C · 2 台 · GLM Mock</option><option>950DT · 待采集</option></select><label class="bench-load-filter">输入 <select id="inputLengthFilter" aria-label="筛选输入长度"></select></label><label class="bench-load-filter">输出 <select id="outputLengthFilter" aria-label="筛选输出长度"></select></label></div></div>
           <div class="data-area">
             <div class="bench-split"><div class="bench-chart"><div class="chart-meta"><strong>并发负载下的性能曲线</strong></div><div class="chart-wrap"><svg class="chart-svg" id="chartSvg" viewBox="0 0 960 660" preserveAspectRatio="none" aria-label="吞吐、TTFT 与 TPOT 三面板性能曲线" role="img"></svg><div class="chart-tip" id="chartTip"></div></div><div class="chart-legend"><span><i class="legend-line" style="background:#1e3a5f"></i>总吞吐</span><span><i class="legend-line" style="background:#64748b"></i>Prompt 输入</span><span><i class="legend-line" style="background:#15803d"></i>Completion 输出</span><span><i class="legend-line" style="background:#1d4ed8"></i>TTFT</span><span><i class="legend-line" style="background:#b45309"></i>TPOT</span></div></div><div class="bench-table"><div class="table-head"><strong>测试明细</strong><span id="rowCount"></span></div><div class="table-scroll"><table><thead><tr><th>并发</th><th>TTFT<br>avg / p99</th><th>TPOT<br>avg</th><th>输入<br>tok/s</th><th>输出<br>tok/s</th><th>总吞吐<br>tok/s</th><th>QPS<br>/套</th></tr></thead><tbody id="benchmarkRows"></tbody></table></div></div></div>
             <div class="disclaimer"><span>ⓘ</span><span id="homeDataNote">实测数据源自 DeepSeek_V4_Flash_0731_capacity_planning.html。图表负载为输入 3,069 / 输出 512 tokens；设备为 910B，1P1D（2 台），原始记录注明上下文 135K。场景并发换算仍需目标业务压测验证。</span></div>
@@ -263,21 +357,19 @@
     </section>
     <section class="view" id="benchmarks">
       <div class="hero"><div><div class="eyebrow">Benchmark library</div><h1>把分散的实测结果，放进同一张性能地图</h1><p>按芯片、模型与负载条件筛选；后续可把各团队 Excel 的测试记录归一到同一字段。</p></div><div class="stamp"><strong>记录字段</strong>硬件 · 模型 · 并发 · 上下文<br>延迟 · 吞吐 · 数据来源</div></div>
-      <div class="data-view-grid"><article class="panel"><div class="panel-head"><span class="panel-title" id="dataTabTitle">模型性能参考</span><div class="data-toolbar"><select id="modelFilter2" aria-label="筛选模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · Mock 数据</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter2" aria-label="筛选配置"><option>910B · 2 台 · DeepSeek 实测</option><option>910C · 2 台 · Coding Mock</option><option>950DT · 待采集</option></select></div></div><div class="data-area"><div class="bench-split"><div class="bench-chart"><div class="chart-meta"><strong>三面板性能曲线 · 并发为共享横轴</strong></div><div class="chart-wrap"><svg class="chart-svg" id="chartSvg2" viewBox="0 0 960 660" preserveAspectRatio="none" aria-label="吞吐、TTFT 与 TPOT 三面板性能曲线" role="img"></svg><div class="chart-tip" id="chartTip2"></div></div><div class="chart-legend"><span><i class="legend-line" style="background:#1e3a5f"></i>总吞吐</span><span><i class="legend-line" style="background:#64748b"></i>Prompt 输入</span><span><i class="legend-line" style="background:#15803d"></i>Completion 输出</span><span><i class="legend-line" style="background:#1d4ed8"></i>TTFT</span><span><i class="legend-line" style="background:#b45309"></i>TPOT</span></div></div><div class="bench-table"><div class="table-head"><strong>全部测试记录</strong><span id="rowCount2"></span></div><div class="table-scroll"><table><thead><tr><th>并发</th><th>TTFT<br>avg / p99</th><th>TPOT<br>avg</th><th>输入<br>tok/s</th><th>输出<br>tok/s</th><th>总吞吐<br>tok/s</th><th>QPS<br>/套</th></tr></thead><tbody id="benchmarkRows2"></tbody></table></div></div></div><div class="disclaimer"><span>ⓘ</span><span id="dataTabNote">当前收录 1 组可用记录。字段建议统一包含卡型与数量、模型和版本、量化精度、推理框架、输入 / 输出 token、并发、TTFT、TPOT、吞吐、测试环境及来源。</span></div></div></article></div>
+      <div class="data-view-grid"><article class="panel"><div class="panel-head"><span class="panel-title" id="dataTabTitle">模型性能参考</span><div class="data-toolbar"><select id="modelFilter2" aria-label="筛选模型"><option>DeepSeek V4 Flash 0731</option><option>GLM-5.3 · Mock 数据</option><option>GLM-5.3 Flash · 待采集</option></select><select id="chipFilter2" aria-label="筛选配置"><option>910B · 2 台 · DeepSeek 实测</option><option>910C · 2 台 · GLM Mock</option><option>950DT · 待采集</option></select><label class="bench-load-filter">输入 <select id="inputLengthFilter2" aria-label="筛选输入长度"></select></label><label class="bench-load-filter">输出 <select id="outputLengthFilter2" aria-label="筛选输出长度"></select></label></div></div><div class="data-area"><div class="bench-split"><div class="bench-chart"><div class="chart-meta"><strong>三面板性能曲线 · 并发为共享横轴</strong></div><div class="chart-wrap"><svg class="chart-svg" id="chartSvg2" viewBox="0 0 960 660" preserveAspectRatio="none" aria-label="吞吐、TTFT 与 TPOT 三面板性能曲线" role="img"></svg><div class="chart-tip" id="chartTip2"></div></div><div class="chart-legend"><span><i class="legend-line" style="background:#1e3a5f"></i>总吞吐</span><span><i class="legend-line" style="background:#64748b"></i>Prompt 输入</span><span><i class="legend-line" style="background:#15803d"></i>Completion 输出</span><span><i class="legend-line" style="background:#1d4ed8"></i>TTFT</span><span><i class="legend-line" style="background:#b45309"></i>TPOT</span></div></div><div class="bench-table"><div class="table-head"><strong>全部测试记录</strong><span id="rowCount2"></span></div><div class="table-scroll"><table><thead><tr><th>并发</th><th>TTFT<br>avg / p99</th><th>TPOT<br>avg</th><th>输入<br>tok/s</th><th>输出<br>tok/s</th><th>总吞吐<br>tok/s</th><th>QPS<br>/套</th></tr></thead><tbody id="benchmarkRows2"></tbody></table></div></div></div><div class="disclaimer"><span>ⓘ</span><span id="dataTabNote">当前收录 1 组可用记录。字段建议统一包含卡型与数量、模型和版本、量化精度、推理框架、输入 / 输出 token、并发、TTFT、TPOT、吞吐、测试环境及来源。</span></div></div></article></div>
       <footer class="page-foot"><span>数据集状态：DeepSeek V4 Flash 0731 / 910B 为实测；GLM-5.3 / 910C 为 Mock；其他组合待采集。</span><span>数据版本 2026.10 Demo</span></footer>
-    </section>
-    <section class="view" id="experience">
-      <div class="hero"><div><div class="eyebrow">Inference playground</div><h1>在推荐配置上，直接体验响应节奏</h1><p>这是方案沟通用的交互演示窗口。选择场景后，右侧同步展示当前推荐配置与性能基线。</p></div><div class="stamp"><strong>当前推理配置</strong><span id="playgroundConfig"></span></div></div>
-      <div class="chat-layout"><article class="panel chat-main"><div class="chat-head"><div class="model-meta"><div class="model-chip" id="modelChip">DS</div><div><div class="model-name" id="chatModel">DeepSeek V4 Flash 0731</div><div class="model-sub" id="chatModelSub">910B · 1P1D 实测配置参考</div></div></div><span class="chat-status">● 本地体验模拟</span></div><div class="messages" id="messages"></div><div class="composer"><div class="prompt-chips"><button class="prompt-chip" data-prompt="请解释这段代码的逻辑，并指出可能的性能问题。">代码审查</button><button class="prompt-chip" data-prompt="请总结这份知识库文档，并列出关键结论。">知识库问答</button><button class="prompt-chip" data-prompt="请按区域分析本季度销售趋势，并给出三条发现。">数据分析</button></div><form class="input-row" id="chatForm"><input id="chatInput" placeholder="输入一个问题，体验模型响应…" autocomplete="off"/><button class="send" type="submit">发送</button></form></div></article><aside class="panel chat-side"><div class="panel-head"><span class="panel-title">当前性能基线</span></div><div class="panel-body"><div class="side-label">方案配置</div><div class="side-stat"><span>加速卡</span><strong id="sideChip"></strong></div><div class="side-stat"><span>部署规模</span><strong id="sideNodes"></strong></div><div class="side-stat"><span>推荐模型</span><strong id="sideModel"></strong></div><div class="side-stat"><span>适用场景</span><strong id="sideScene"></strong></div><div class="performance-band"><div class="band-title">16 并发 · TTFT avg</div><div class="band-value" id="sideTtft"></div><div class="band-foot" id="sideSource">1 套（2 台）实测；多套并发容量按线性扩展推算，需补测。</div></div><div class="performance-band"><div class="band-title">16 并发 · Decode 速度</div><div class="band-value" id="sideSpeed"></div><div class="band-foot" id="sideDecodeSource">对应现有 910B 压测记录，输入 3,069 / 输出 512 tokens。</div></div></div></aside></div><footer class="page-foot"><span>演示对话为本地模拟，不会发送到推理服务。</span><span>由昇腾场景方案驱动</span></footer>
     </section>
   </main>
 </div>
 <div class="modal-backdrop" id="sceneModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="eyebrow">Scenario brief</div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="scene-tags" id="modalTags"></div><p id="modalWorkload"></p><button id="closeModal">返回配置</button></div></div>
+<script src="planning.js"></script>
+<script src="planning-ui.js"></script>
 <script>
   const scenarios = [
-    { id:'coding', title:'Coding 助手', sub:'代码补全 · 仓库问答 · Agent', heading:'企业级 Coding 助手', description:'面向开发团队的代码生成、代码解释与仓库级问答。建议重点评估长上下文下的首 token 延迟，以及多人同时编码时的吞吐稳定性。', tags:['代码生成','仓库 RAG','长上下文'], minimum:{label:'最低配置 · Mock',nodes:1,chip:'910C · 1P1D',model:'GLM-5.3',users:2,ttft:'1.28s',speed:'53.76 tok/s'}, recommended:{label:'推荐配置 · Mock 估算',nodes:2,chip:'910C · 1P1D',model:'GLM-5.3',users:32,ttft:'2.22s',speed:'45.25 tok/s'}, note:'GLM-5.3 性能和容量均为 Mock 数据，仅供演示；客户方案需实际压测验证。', workload:'建议先确认代码库规模、会话上下文长度、峰值并发以及是否需要 Agent 多步调用。'},
-    { id:'service', title:'聊天机器人 / AI 客服', sub:'多轮对话 · 知识库检索 · 高可用', heading:'聊天机器人 / AI 客服', description:'适用于客服坐席辅助、在线问答与企业服务机器人。通过知识库检索回答产品与服务问题，按高峰并发和可接受等待时间选择部署规模。', tags:['多轮对话','知识库 RAG','峰值并发'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议提供日均会话量、峰值并发、知识库规模、答案引用要求与 SLA。'},
-    { id:'chatbi', title:'ChatBI 数据分析', sub:'自然语言问数 · SQL 生成 · 分析总结', heading:'ChatBI 数据分析助手', description:'面向经营分析与数据查询，通过自然语言转 SQL、指标解释和结果总结降低数据使用门槛。重点关注复杂问题的响应时间与分析任务的上下文长度。', tags:['自然语言问数','SQL 生成','指标解读'], minimum:{label:'最低配置 · 实测基线',nodes:1,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:2,ttft:'1.35s',speed:'55.31 tok/s'}, recommended:{label:'推荐配置 · 线性估算',nodes:2,chip:'910B · 1P1D',model:'DeepSeek V4 Flash 0731',users:32,ttft:'1.66s',speed:'49.98 tok/s'}, note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议确认数据源数量、指标口径、SQL 权限边界、问题复杂度与业务高峰时段。'}
+    { id:'coding', title:'Coding 助手', sub:'代码补全 · 仓库问答 · Agent', heading:'企业级 Coding 助手', description:'面向开发团队的代码生成、仓库问答与 Agent 开发，以可用输入 / 输出 TPS 衡量吞吐，同时约束首字等待与平均任务耗时。', tags:['代码生成','仓库 RAG','长上下文'], note:'GLM-5.3 性能和容量均为 Mock 数据，仅供演示；客户方案需实际压测验证。', workload:'建议先确认代码库规模、会话上下文长度、峰值并发以及是否需要 Agent 多步调用。'},
+    { id:'service', title:'聊天机器人 / AI 客服', sub:'多轮对话 · 知识库检索 · 高可用', heading:'聊天机器人 / AI 客服', description:'适用于客服坐席辅助、在线问答与企业服务机器人。通过知识库检索回答产品与服务问题，按高峰并发和可接受等待时间选择部署规模。', tags:['多轮对话','知识库 RAG','峰值并发'], note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议提供日均会话量、峰值并发、知识库规模、答案引用要求与 SLA。'},
+    { id:'chatbi', title:'ChatBI 数据分析', sub:'自然语言问数 · SQL 生成 · 分析总结', heading:'ChatBI 数据分析助手', description:'面向经营分析与数据查询，通过自然语言转 SQL、指标解释和结果总结降低数据使用门槛。重点关注复杂问题的响应时间与分析任务的上下文长度。', tags:['自然语言问数','SQL 生成','指标解读'], note:'现有实测基线为 2 台 910B（1P1D）；实际交付地点需另行核对。场景容量按套数线性估算，尚未经过多套并行压测。', workload:'建议确认数据源数量、指标口径、SQL 权限边界、问题复杂度与业务高峰时段。'}
   ];
   // Values imported from DeepSeek_V4_Flash_0731_capacity_planning.html. Ascend 910B, 1P1D (2 nodes), 3069 input / 512 output tokens.
   const data = [
@@ -295,8 +387,8 @@
     {conc:48,lat:14.364,ttft:2654.7,ttftP99:8490.3,tpot:22.9,decode:43.65,accept:74.4,prompt:9084.83,completion:1515.62,total:10600.45,qps:2.96},
     {conc:64,lat:14.336,ttft:2910.6,ttftP99:10513.9,tpot:22.4,decode:44.72,accept:75.7,prompt:11900.82,completion:1985.41,total:13886.23,qps:3.88}
   ];
-  // GLM-5.3 values below are illustrative Mock data for the Coding demo, not benchmark results.
-  function mockPoint(conc,qps,ttft,ttftP99,tpot){ const prompt=+(qps*3069).toFixed(2), completion=+(qps*512).toFixed(2); return {conc,qps,ttft,ttftP99,tpot,prompt,completion,total:+(prompt+completion).toFixed(2),decode:+(1000/tpot).toFixed(2),mock:true}; }
+  // GLM-5.3 values below are illustrative Mock data, 8192 input / 1024 output tokens.
+  function mockPoint(conc,qps,ttft,ttftP99,tpot){ const prompt=+(qps*8192).toFixed(2), completion=+(qps*1024).toFixed(2); return {conc,qps,ttft,ttftP99,tpot,prompt,completion,total:+(prompt+completion).toFixed(2),decode:+(1000/tpot).toFixed(2),mock:true}; }
   const glmMockData = [
     mockPoint(2,.22,1280,2050,18.6),
     mockPoint(16,1.32,1710,3800,20.3),
@@ -306,52 +398,50 @@
   ];
   let selected = 0;
   let selectedTierIndex = 2;
-  const tierDefs = [
-    {conc:2,name:'优',color:'#15803d',desc:'低等待'},
-    {conc:16,name:'良',color:'#ca8a04',desc:'体验平衡'},
-    {conc:20,name:'良',color:'#ca8a04',desc:'容量平衡'},
-    {conc:32,name:'中',color:'#c2410c',desc:'高吞吐'},
-    {conc:64,name:'差',color:'#b91c1c',desc:'高压力'}
-  ];
   const scenarioIcons = {
     coding:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="m9 9-3 3 3 3m6-6 3 3-3 3"/></svg>',
     service:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16v12H9l-5 3v-15Z"/><path d="M8 9h8M8 12.5h5"/></svg>',
     chatbi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17M5.5 17v-6h3v6m3 0V5.5h3V17m3 0V9h3v8"/></svg>'
   };
   const sceneCardCopy = {
-    coding:'使用昇腾部署 GLM-5.3 推理服务，结合 Code Agent 进行代码生成、编写和仓库问答。当前性能为 Mock 数据。',
+    coding:'面向代码生成、编写和仓库问答，按开发者人数与使用强度评估所选模型的推理能力。',
     service:'将昇腾上的大模型与企业知识库结合，处理在线咨询、工单问答和坐席辅助，并关注高峰时段的响应体验。',
     chatbi:'在昇腾上运行分析模型，把自然语言问题转为数据查询与结论摘要，帮助业务人员快速理解经营指标。'
   };
-  const sceneDemand = {
-    coding:{qps:8,tier:1,text:'演示目标：峰值 8 QPS。GLM-5.3 性能和配置均为 Mock 数据，待真实压测替换；实际项目需补充代码仓库规模、上下文长度、Agent 调用链和峰值并发。'},
-    service:{qps:30,tier:2,text:'参考容量规划案例：10 万用户、20% 日活、每人每天 30 次请求，80% 请求集中在 8 小时；峰值目标 30 QPS。单请求输入 3,069 / 输出 512 tokens。'},
-    chatbi:{qps:4,tier:1,text:'演示目标：峰值 4 QPS；实际项目需确认数据源、SQL 复杂度、权限边界和问题高峰。'}
-  };
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-  function scenarioModel(){ return scenarios[selected].id==='coding'?'GLM-5.3':'DeepSeek V4 Flash 0731'; }
-  function scenarioData(){ const coding=scenarios[selected].id==='coding', chip=$('#planChip').value; return coding?(chip==='910C'?glmMockData:[]):(chip==='910B'?data:[]); }
-  function sourceLabel(){ return !scenarioData().length?'待采集':scenarios[selected].id==='coding'?'Mock 数据':'实测数据'; }
-  function renderScenarios(){ $('#scenarioStrip').innerHTML=scenarios.map((s,i)=>{const coding=s.id==='coding', model=coding?'GLM-5.3':'DeepSeek V4 Flash 0731';return `<button class="scenario ${i===selected?'selected':''}" data-index="${i}"><span class="scenario-title-row"><span class="scenario-icon">${scenarioIcons[s.id]}</span><span class="scenario-title">${s.title}</span>${coding?'<span class="mock-mark">Mock 数据</span>':''}</span><span class="scenario-text"><span class="scenario-desc">${sceneCardCopy[s.id]}</span></span><span class="scenario-fit"><small>最小配置</small>2 台 Ascend ${coding?'910C':'910B'} · ${model}${coding?'<span class="mock-mark">Mock</span>':'<span class="scenario-load">压测负载 · 输入 <strong>3,069</strong> / 输出 <strong>512</strong> tokens</span>'}</span></button>`;}).join(''); $$('.scenario').forEach(b=>b.onclick=()=>selectScenario(+b.dataset.index)); }
-  function selectScenario(i){ selected=i; const s=scenarios[i], demand=sceneDemand[s.id]; selectedTierIndex=demand.tier; renderScenarios(); $('#sceneHeading').textContent=s.heading; $('#sceneDescription').textContent=s.description+(s.id==='coding'?' 当前 GLM-5.3 配置和性能为 Mock 数据，待真实压测替换。':''); $('#sceneTags').innerHTML=s.tags.map(t=>`<span class="tag">${t}</span>`).join(''); $('#serviceTokenHighlights').hidden=s.id!=='service'; $('#assumptionText').textContent=demand.text; $('#targetQps').value=demand.qps; $('#multInput').value=1; $('#modelFilter').value=s.id==='coding'?'GLM-5.3 · Mock 数据':'DeepSeek V4 Flash 0731'; $('#modelFilter2').value=$('#modelFilter').value; $('#planChip').selectedIndex=s.id==='coding'?1:0; $('#chipFilter').selectedIndex=$('#planChip').selectedIndex; $('#chipFilter2').selectedIndex=$('#planChip').selectedIndex; $('#miniAnswer').textContent='选择档位，输入问题开始体验。'; $('#miniStatus').textContent=s.id==='coding'?'回复内容和响应节奏均为 Mock 数据。':'回复内容为演示文案，响应节奏按原始压测值模拟。'; renderTierCards(); updateMultiplier(); renderChartAndTable(); }
-  function tierPoint(){ return scenarioData().find(d=>d.conc===tierDefs[selectedTierIndex].conc); }
-  function targetQps(){ return Math.max(.1,Math.min(1000,parseFloat($('#targetQps').value)||1)); }
-  function renderTierCards(){ const target=targetQps(), rows=scenarioData(), mock=sourceLabel()==='Mock 数据'; if(!rows.length){ $('#tierGrid').innerHTML=`<div class="bench-empty" style="grid-column:1/-1">Ascend ${$('#planChip').value} · ${scenarioModel()} 暂无性能数据，等待压测记录导入后提供体验分档与容量建议。</div>`; return; } $('#tierGrid').innerHTML=tierDefs.map((t,i)=>{const d=rows.find(row=>row.conc===t.conc), units=Math.ceil(target/d.qps);return `<button class="tier-card ${i===selectedTierIndex?'selected':''}" data-tier="${i}" aria-pressed="${i===selectedTierIndex}"><span class="tier-name"><span><i style="background:${t.color}"></i>${t.name} · ${t.desc}</span>${mock?'<span class="mock-mark">Mock</span>':''}</span><div class="tier-conc">单套${mock?'Mock':'实测'} ${t.conc} 并发</div><div class="tier-metric"><span>TTFT avg / p99</span><b>${(d.ttft/1000).toFixed(2)} / ${(d.ttftP99/1000).toFixed(2)}s</b></div><div class="tier-metric"><span>TPOT avg</span><b>${d.tpot.toFixed(1)}ms</b></div><div class="tier-metric"><span>单套 QPS</span><b>${d.qps.toFixed(2)}</b></div><div class="tier-need">达到 ${target} QPS 需<strong>${units} 套 · ${units*2} 台</strong></div></button>`;}).join(''); $$('.tier-card').forEach(b=>b.onclick=()=>{selectedTierIndex=+b.dataset.tier;renderTierCards();updateMultiplier();}); }
-  function updateMultiplier(){ const n=Math.max(1,Math.min(16,parseInt($('#multInput').value)||1)); $('#multInput').value=n; const d=tierPoint(); if(!d){ $('#multExplain').textContent=`Ascend ${$('#planChip').value} 与 ${scenarioModel()} 暂无测试数据，不能估算设备数量或容量。`; $('#usersResult').innerHTML='— <small>QPS</small>'; $('#miniTierMeta').textContent='待采集'; $('#miniIntro').textContent='当前卡型暂无 TTFT / TPOT 数据，暂不能回放性能体验。'; $('#miniStatus').textContent='请选择当前场景有数据的卡型。'; $('#miniSend').disabled=true; syncPlayground(); return; } $('#miniSend').disabled=false; const base=Math.ceil(targetQps()/d.qps), units=base*n; $('#multExplain').textContent=`${base} 套基础配置 × ${n} = ${units} 套，共 ${units*2} 台 ${$('#planChip').value}（1P1D）。该档单套${d.mock?'Mock':'实测'} ${d.qps.toFixed(2)} QPS；跨套扩容按线性估算，未计冗余。`; $('#usersResult').innerHTML=`${(units*d.qps).toFixed(2)} <small>QPS</small>`; $('#miniTierMeta').textContent=`${tierDefs[selectedTierIndex].name}档 · ${d.mock?'Mock · ':''}TTFT ${(d.ttft/1000).toFixed(2)}s · TPOT ${d.tpot.toFixed(1)}ms`; $('#miniIntro').textContent=d.mock?'提问后按 Mock TTFT 和 TPOT 模拟回复节奏，当前数值不是 GLM-5.3 实测。':'提问后按该档实测 TTFT 等待首字，再按 TPOT 逐步显示回复。'; syncPlayground(); }
-  function syncPlayground(){ const s=scenarios[selected], d=tierPoint(), chip=$('#planChip').value, model=scenarioModel(); $('#chatModel').textContent=model; $('#modelChip').textContent=s.id==='coding'?'GLM':'DS'; $('#sideChip').textContent=chip; $('#sideModel').textContent=model+(d?.mock?' · Mock':''); $('#sideScene').textContent=s.title; if(!d){ $('#playgroundConfig').textContent=`Ascend ${chip} · ${model} · 待采集`; $('#chatModelSub').textContent=`Ascend ${chip} · 暂无性能数据`; $('.chat-status').textContent='● 等待压测数据'; $('#sideNodes').textContent='待评估'; $('#sideTtft').textContent='—'; $('#sideSpeed').textContent='—'; $('#sideSource').textContent='当前卡型和模型组合暂无压测数据。'; $('#sideDecodeSource').textContent='需导入对应测试记录后展示。'; $('#sideTtft').parentElement.querySelector('.band-title').textContent='TTFT avg · 待采集'; $('#sideSpeed').parentElement.querySelector('.band-title').textContent='Decode 速度 · 待采集'; $('.send').disabled=true; return; } $('.send').disabled=false; const n=Math.max(1,parseInt($('#multInput').value)||1), units=Math.ceil(targetQps()/d.qps)*n; $('#playgroundConfig').textContent=`${units} 套 · ${units*2} 台 ${chip} · ${model}${d.mock?'（Mock）':''}`; $('#chatModelSub').textContent=d.mock?'GLM-5.3 Mock 数据 · 仅供界面演示':`${chip} · 1P1D 实测配置参考`; $('.chat-status').textContent=d.mock?'● Mock 数据回放':'● 本地体验模拟'; $('#sideNodes').textContent=`${units*2} 台 · ${units} 套`; $('#sideTtft').innerHTML=`${(d.ttft/1000).toFixed(2)} <small>秒</small>`; $('#sideSpeed').innerHTML=`${d.decode.toFixed(2)} <small>tok/s</small>`; $('#sideSource').textContent=d.mock?'GLM-5.3 当前为 Mock 数据，尚无对应实测。':'1 套（2 台）实测；多套并发容量按线性扩展推算，需补测。'; $('#sideDecodeSource').textContent=d.mock?'Decode 速度为 Mock 数据，等待真实压测替换。':`对应现有 ${chip} 压测记录，输入 3,069 / 输出 512 tokens。`; $('#sideTtft').parentElement.querySelector('.band-title').textContent=`${d.conc} 并发 · TTFT avg${d.mock?'（Mock）':''}`; $('#sideSpeed').parentElement.querySelector('.band-title').textContent=`${d.conc} 并发 · Decode 速度${d.mock?'（Mock）':''}`; }
-  function filteredData(chip,model){ if(model.includes('待采集'))return []; if(model.includes('GLM-5.3 · Mock'))return chip.startsWith('910C')?glmMockData:[]; return chip.startsWith('910B')?data:[]; }
+  const benchmarkSets = [
+    {chip:'910B',model:'DeepSeek V4 Flash 0731',input:3069,output:512,rows:data,source:'DeepSeek_V4_Flash_0731_capacity_planning.html'},
+    {chip:'910C',model:'GLM-5.3 · Mock 数据',input:8192,output:1024,rows:glmMockData,mock:true,source:'Mock 演示'}
+  ];
+  function benchmarkCandidates(chip,model){ return benchmarkSets.filter(set=>chip.startsWith(set.chip)&&set.model===model); }
+  function filteredData(chip,model,input,output){
+    return benchmarkCandidates(chip,model).filter(set=>String(set.input)===String(input)&&String(set.output)===String(output)).flatMap(set=>set.rows);
+  }
+  function setLengthOptions(select,values){
+    const previous=select.value, unique=[...new Set(values)].sort((a,b)=>a-b);
+    select.innerHTML=unique.length?unique.map(value=>'<option value="'+value+'">'+fmt(value)+' tokens</option>').join(''):'<option value="">待采集</option>';
+    select.disabled=!unique.length;
+    select.value=unique.some(value=>String(value)===previous)?previous:unique.length?String(unique[0]):'';
+  }
+  function syncBenchmarkLoads(suffix){
+    const candidates=benchmarkCandidates($('#chipFilter'+suffix).value,$('#modelFilter'+suffix).value);
+    const input=$('#inputLengthFilter'+suffix), output=$('#outputLengthFilter'+suffix);
+    setLengthOptions(input,candidates.map(set=>set.input));
+    setLengthOptions(output,candidates.filter(set=>String(set.input)===input.value).map(set=>set.output));
+    return candidates.find(set=>String(set.input)===input.value&&String(set.output)===output.value);
+  }
   function rowsHtml(rows){ return rows.map(d=>`<tr><td>${d.conc}${d.mock?'<span class="mock-mark">Mock</span>':''}</td><td>${(d.ttft/1000).toFixed(2)} / ${(d.ttftP99/1000).toFixed(2)} s</td><td>${d.tpot.toFixed(1)} ms</td><td>${d.prompt.toLocaleString('en-US',{minimumFractionDigits:2})}</td><td>${d.completion.toFixed(2)}</td><td>${d.total.toLocaleString('en-US',{minimumFractionDigits:2})}</td><td>${d.qps.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="7">当前筛选条件下尚无数据</td></tr>'; }
   function drawBenchmark(svg,tip,rows){
     if(!svg)return;
+    tip.style.display='none';
+    svg.onpointermove=null;svg.onpointerleave=null;
     const W=960, H=660, left=80, right=880, count=rows.length;
     if(!count){ svg.innerHTML='<text x="480" y="330" text-anchor="middle" fill="#8a857c" font-size="15">当前筛选条件下尚无数据</text>'; return; }
-    const panels={total:{top:50,bottom:190,max:14000},ttft:{top:240,bottom:380,max:3000},tpot:{top:430,bottom:570,max:24}};
+    const panels={total:{top:50,bottom:190,max:Math.max(14000,Math.ceil(Math.max(...rows.map(d=>d.total))/4000)*4000)},ttft:{top:240,bottom:380,max:3000},tpot:{top:430,bottom:570,max:24}};
     const series=[['total','total','#1e3a5f',2.7],['prompt','total','#64748b',1.4,'5 4'],['completion','total','#15803d',1.4,'5 4'],['ttft','ttft','#1d4ed8',2],['tpot','tpot','#b45309',2]];
     const xs=rows.map((_,i)=>left+i*((right-left)/Math.max(count-1,1)));
     const y=(panel,v)=>panels[panel].bottom-(v/panels[panel].max)*(panels[panel].bottom-panels[panel].top);
     const pieces=['<rect x="80" y="50" width="800" height="140" fill="#f0fdf4"/>','<rect x="80" y="240" width="800" height="140" fill="#eff6ff"/>','<rect x="80" y="430" width="800" height="140" fill="#fff7ed"/>'];
-    const ticks=[['total',['0','3.5k','7k','10.5k','14k']],['ttft',['0','750','1,500','2,250','3,000']],['tpot',['0','6','12','18','24']]];
+    const ticks=[['total',Array.from({length:5},(_,i)=>i?`${+(panels.total.max*i/4/1000).toFixed(1)}k`:'0')],['ttft',['0','750','1,500','2,250','3,000']],['tpot',['0','6','12','18','24']]];
     ticks.forEach(([key,labels])=>{const p=panels[key];labels.forEach((label,i)=>{const gy=p.bottom-i*((p.bottom-p.top)/4);pieces.push(`<line x1="${left}" y1="${gy}" x2="${right}" y2="${gy}" stroke="#e7e3da" stroke-dasharray="3 3"/><text x="72" y="${gy+4}" text-anchor="end" fill="#8a857c" font-size="10">${label}</text>`);});});
     pieces.push(`<line x1="${left}" y1="50" x2="${left}" y2="570" stroke="#d8d4cc"/>`);
     rows.forEach((d,i)=>pieces.push(`<text x="${xs[i]}" y="592" text-anchor="middle" fill="#8a857c" font-size="10">${d.conc}</text>`));
@@ -362,22 +452,32 @@
     svg.onpointermove=e=>{const rect=svg.getBoundingClientRect(), x=(e.clientX-rect.left)/rect.width*W;let idx=0;xs.forEach((v,i)=>{if(Math.abs(v-x)<Math.abs(xs[idx]-x))idx=i;}); const d=rows[idx], line=svg.querySelector('#hoverLine');line.setAttribute('x1',xs[idx]);line.setAttribute('x2',xs[idx]);line.setAttribute('visibility','visible');tip.innerHTML=`<b>${d.mock?'Mock 数据 · ':''}并发 ${d.conc}</b>总吞吐 ${d.total.toLocaleString('en-US',{minimumFractionDigits:2})} tok/s<br>输入 ${d.prompt.toFixed(2)} · 输出 ${d.completion.toFixed(2)} tok/s<br>TTFT ${d.ttft.toFixed(1)} ms · p99 ${(d.ttftP99/1000).toFixed(2)} s<br>TPOT ${d.tpot.toFixed(1)} ms · 单套 ${d.qps.toFixed(2)} QPS`;tip.style.display='block';const wrap=svg.parentElement, box=wrap.getBoundingClientRect(), leftPx=e.clientX-box.left+12;tip.style.left=`${Math.min(Math.max(8,leftPx),box.width-205)}px`;tip.style.top=`${Math.max(8,e.clientY-box.top-40)}px`;};
     svg.onpointerleave=()=>{const line=svg.querySelector('#hoverLine');line.setAttribute('visibility','hidden');tip.style.display='none';};
   }
-  function renderChartAndTable(){ const rows=filteredData($('#chipFilter').value,$('#modelFilter').value), mock=rows.some(d=>d.mock); $('#benchmarkRows').innerHTML=rowsHtml(rows); $('#rowCount').textContent=`${rows.length} 条${mock?' Mock':''}记录`; $('#homeDataTitle').textContent=mock?'性能数据 · GLM-5.3（Mock）':rows.length?'实测数据 · DeepSeek V4 Flash 0731':'性能数据 · 待采集'; $('#homeDataNote').textContent=mock?'GLM-5.3 / Ascend 910C 的 TTFT、TPOT、吞吐与容量均为 Mock 数据，只用于演示选型流程；尚无对应实测记录。':rows.length?'实测数据源自 DeepSeek_V4_Flash_0731_capacity_planning.html。图表负载为输入 3,069 / 输出 512 tokens；设备为 910B，1P1D（2 台）。场景容量需目标业务压测验证。':'当前模型与配置组合尚无数据，请切换选择。'; drawBenchmark($('#chartSvg'),$('#chartTip'),rows); const rows2=filteredData($('#chipFilter2').value,$('#modelFilter2').value), mock2=rows2.some(d=>d.mock); $('#benchmarkRows2').innerHTML=rowsHtml(rows2); $('#rowCount2').textContent=`${rows2.length} 条${mock2?' Mock':''}记录`; $('#dataTabTitle').textContent=mock2?'GLM-5.3 性能数据 · Mock':rows2.length?'DeepSeek V4 Flash 0731 · 实测':'模型性能参考 · 待采集'; $('#dataTabNote').textContent=mock2?'GLM-5.3 / Ascend 910C 当前为 Mock 数据，数字仅供界面演示，不可作为客户方案的性能依据。':rows2.length?'DeepSeek V4 Flash 0731 / 910B 实测数据来自参考 HTML；其他模型和配置待采集。':'当前筛选条件下尚无数据。'; drawBenchmark($('#chartSvg2'),$('#chartTip2'),rows2); }
-  $$('.nav button').forEach(b=>b.onclick=()=>{ $$('.nav button').forEach(x=>x.classList.toggle('active',x===b)); $$('.view').forEach(v=>v.classList.toggle('active',v.id===b.dataset.view)); if(b.dataset.view==='benchmarks')renderChartAndTable(); if(b.dataset.view==='experience')syncPlayground(); });
-  $('#minus').onclick=()=>{ $('#multInput').value=Math.max(1,(+$('#multInput').value||1)-1); updateMultiplier(); }; $('#plus').onclick=()=>{ $('#multInput').value=Math.min(16,(+$('#multInput').value||1)+1); updateMultiplier(); }; $('#multInput').oninput=updateMultiplier;
-  function setChip(index){ $('#planChip').selectedIndex=index; $('#chipFilter').selectedIndex=index; $('#chipFilter2').selectedIndex=index; $('#miniAnswer').textContent='选择档位，输入问题开始体验。'; renderTierCards(); updateMultiplier(); renderChartAndTable(); }
+  function renderBenchmarkPanel(suffix){
+    const set=syncBenchmarkLoads(suffix);
+    const rows=filteredData($('#chipFilter'+suffix).value,$('#modelFilter'+suffix).value,$('#inputLengthFilter'+suffix).value,$('#outputLengthFilter'+suffix).value);
+    const mock=!!set?.mock||rows.some(row=>row.mock);
+    $('#benchmarkRows'+suffix).innerHTML=rowsHtml(rows);
+    $('#rowCount'+suffix).textContent=rows.length+' 条'+(mock?' Mock':'')+'记录';
+    const title=$(suffix?'#dataTabTitle':'#homeDataTitle'), note=$(suffix?'#dataTabNote':'#homeDataNote');
+    title.textContent=rows.length?(mock?'性能数据 · '+set.model.replace(' · Mock 数据','')+'（Mock）':'实测数据 · '+set.model):'性能数据 · 待采集';
+    note.textContent=rows.length?
+      (mock?'Mock 演示数据，不作为客户性能依据。':'实测来源：'+(set.source||'压测记录')+'。')+
+      '负载：输入 '+fmt(set.input)+' / 输出 '+fmt(set.output)+' tokens；'+set.model+' / Ascend '+set.chip+'，1P1D（2 台）。'+
+      (mock?'TTFT、TPOT、吞吐与容量均为演示值。':'不同负载分别筛选展示；场景容量仍需目标业务压测验证。'):
+      '当前模型、卡型和输入 / 输出长度组合暂无数据。';
+    drawBenchmark($('#chartSvg'+suffix),$('#chartTip'+suffix),rows);
+  }
+  function renderChartAndTable(){ renderBenchmarkPanel('');renderBenchmarkPanel('2'); }
+  $$('.nav button').forEach(b=>b.onclick=()=>{ $$('.nav button').forEach(x=>x.classList.toggle('active',x===b)); $$('.view').forEach(v=>v.classList.toggle('active',v.id===b.dataset.view)); if(b.dataset.view==='benchmarks')renderChartAndTable(); });
+  function setChip(index){ $('#planChip').selectedIndex=index; $('#chipFilter').selectedIndex=index; $('#chipFilter2').selectedIndex=index; sceneChips[sceneId()]=$('#planChip').value; selectedTierIndex=0; renderScenarios(); refreshPlanning(); renderChartAndTable(); }
   $('#planChip').onchange=e=>setChip(e.target.selectedIndex); $('#chipFilter').onchange=e=>setChip(e.target.selectedIndex); $('#chipFilter2').onchange=e=>setChip(e.target.selectedIndex); $('#modelFilter').onchange=renderChartAndTable; $('#modelFilter2').onchange=renderChartAndTable;
-  $('#targetQps').oninput=()=>{renderTierCards();updateMultiplier();};
+  for(const suffix of ['', '2']){
+    $('#inputLengthFilter'+suffix).onchange=renderChartAndTable;
+    $('#outputLengthFilter'+suffix).onchange=renderChartAndTable;
+  }
+  hookPlanning();
   $('#detailBtn').onclick=()=>{const s=scenarios[selected];$('#modalTitle').textContent=s.heading;$('#modalDescription').textContent=s.description;$('#modalTags').innerHTML=s.tags.map(t=>`<span class="tag">${t}</span>`).join('');$('#modalWorkload').textContent=s.workload;$('#sceneModal').classList.add('open');}; $('#closeModal').onclick=()=>$('#sceneModal').classList.remove('open'); $('#sceneModal').onclick=e=>{if(e.target.id==='sceneModal')$('#sceneModal').classList.remove('open');};
-  function addMessage(text,user=false){ const d=document.createElement('div');d.className=`msg ${user?'user':''}`;d.innerHTML=`<span class="msg-label">${user?'你':'模型回复'}</span><div class="bubble"></div>`;d.querySelector('.bubble').textContent=text;$('#messages').appendChild(d);$('#messages').scrollTop=$('#messages').scrollHeight;return d; }
-  function mockReply(text){ const s=scenarios[selected], d=tierPoint(), units=Math.ceil(targetQps()/d.qps); const lower=text.toLowerCase(), source=d.mock?'Mock':'实测'; if(/并发|用户|多少人|qps/.test(lower))return `当前「${tierDefs[selectedTierIndex].name}」档单套${source} ${d.qps.toFixed(2)} QPS。按目标峰值 ${targetQps()} QPS 估算，需要 ${units} 套 1P1D，也就是 ${units*2} 台 ${$('#planChip').value}。该数量未含冗余，跨套扩容仍需验证。`; if(/代码|coding|仓库/.test(lower))return `Coding 场景建议先把代码仓库索引接入检索链路，再分别评估代码补全、解释和多步 Agent 任务。${d.mock?'当前 GLM-5.3 性能为 Mock 数据，需补充真实压测。':'当前体验节奏参考 DeepSeek 实测数据，仍需用 Coding 任务验证。'}`; if(/知识库|客服|总结/.test(text))return '聊天机器人可以用大模型结合企业知识库完成多轮问答。方案中需确认知识库规模、答案引用要求和高峰会话量，再用典型问题验证正确率与首字等待体验。'; if(/销售|趋势|sql|数据/.test(lower))return 'ChatBI 试点建议先对齐指标口径、数据源权限与 SQL 边界。用真实业务问题评估查询正确率、响应时间和人工修正率。'; return `你好，我是昇腾推理方案体验窗口。你正在查看「${s.title}」的「${tierDefs[selectedTierIndex].name}」档。当前这条回复按该档${source}首字等待与逐 token 间隔回放；你可以继续询问容量、模型或部署问题。`; }
-  function streamText(target,text,tpot,onProgress,onDone){ let offset=0; const batch=2, timer=setInterval(()=>{offset=Math.min(text.length,offset+batch);target.textContent=text.slice(0,offset);if(onProgress)onProgress();if(offset>=text.length){clearInterval(timer);if(onDone)onDone();}},Math.max(16,tpot*batch)); }
-  let miniBusy=false;
-  $('#miniForm').onsubmit=e=>{e.preventDefault();if(miniBusy||!tierPoint())return;const q=$('#miniInput').value.trim();if(!q)return;miniBusy=true;const d=tierPoint(), tier=tierDefs[selectedTierIndex], reply=mockReply(q);$('#miniSend').disabled=true;$('#miniAnswer').textContent='';$('#miniStatus').textContent=`${d.mock?'Mock · ':''}等待首字 · ${tier.name}档 TTFT ${(d.ttft/1000).toFixed(2)} 秒`;setTimeout(()=>{ $('#miniStatus').textContent=`${d.mock?'Mock · ':''}逐步输出 · TPOT ${d.tpot.toFixed(1)} ms`;streamText($('#miniAnswer'),reply,d.tpot,null,()=>{$('#miniStatus').textContent=`${d.mock?'Mock · ':''}完成 · 首字 ${(d.ttft/1000).toFixed(2)} 秒 · TPOT ${d.tpot.toFixed(1)} ms（回复内容为演示文案）`;$('#miniSend').disabled=false;miniBusy=false;});},d.ttft);};
-  let chatBusy=false;
-  $('#chatForm').onsubmit=e=>{e.preventDefault();if(chatBusy||!tierPoint())return;const input=$('#chatInput'), q=input.value.trim();if(!q)return;chatBusy=true;const d=tierPoint(), tier=tierDefs[selectedTierIndex], reply=mockReply(q);addMessage(q,true);input.value='';$('.chat-status').textContent=`${d.mock?'Mock · ':''}等待首字 · ${tier.name}档 ${(d.ttft/1000).toFixed(2)} 秒`;$('.send').disabled=true;setTimeout(()=>{const bubble=addMessage('',false).querySelector('.bubble');$('.chat-status').textContent=`${d.mock?'Mock · ':''}输出中 · TPOT ${d.tpot.toFixed(1)} ms`;streamText(bubble,reply,d.tpot,()=>{$('#messages').scrollTop=$('#messages').scrollHeight;},()=>{$('.chat-status').textContent=`${d.mock?'Mock · ':''}完成 · TTFT ${(d.ttft/1000).toFixed(2)}s · TPOT ${d.tpot.toFixed(1)}ms`;$('.send').disabled=false;chatBusy=false;});},d.ttft);};
-  $$('.prompt-chip').forEach(b=>b.onclick=()=>{ $('#chatInput').value=b.dataset.prompt; $('#chatInput').focus(); });
-  selectScenario(1); addMessage('你好，我是昇腾方案体验窗口。请选择场景与体验档位，再发送问题；Coding 的 GLM-5.3 性能为 Mock 数据。');
+  selectScenario(1);
 </script>
 </body>
 </html>
